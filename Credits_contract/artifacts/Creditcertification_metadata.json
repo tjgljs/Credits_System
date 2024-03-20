@@ -1,0 +1,768 @@
+{
+	"compiler": {
+		"version": "0.8.20+commit.a1b79de6"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "newAdmin",
+						"type": "address"
+					}
+				],
+				"name": "AdminAdded",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "admin",
+						"type": "address"
+					}
+				],
+				"name": "AdminRemoved",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "previousOwner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "OwnershipTransferred",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "student",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "courseId",
+						"type": "uint256"
+					}
+				],
+				"name": "Cancel",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_newAdmin",
+						"type": "address"
+					}
+				],
+				"name": "addAdmin",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "courseId",
+						"type": "uint256"
+					}
+				],
+				"name": "addCourse",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "teacher",
+						"type": "address"
+					}
+				],
+				"name": "addTeacher",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "allowance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "spender",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "num",
+						"type": "uint256"
+					}
+				],
+				"name": "approve",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "student",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "index",
+						"type": "uint256"
+					}
+				],
+				"name": "approveCreditTransfer",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "courseExists",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "courseLists",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "creditTransferRequests",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "courseId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "targetInstitution",
+						"type": "string"
+					},
+					{
+						"internalType": "bool",
+						"name": "isApproved",
+						"type": "bool"
+					},
+					{
+						"internalType": "bool",
+						"name": "isExecuted",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "student",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "index",
+						"type": "uint256"
+					}
+				],
+				"name": "executeCreditTransfer",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getAllCourseID",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "student",
+						"type": "address"
+					}
+				],
+				"name": "getCreditTransfersOfStudent",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "courseId",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "targetInstitution",
+								"type": "string"
+							},
+							{
+								"internalType": "bool",
+								"name": "isApproved",
+								"type": "bool"
+							},
+							{
+								"internalType": "bool",
+								"name": "isExecuted",
+								"type": "bool"
+							}
+						],
+						"internalType": "struct Creditcertification.CreditTransfer[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getCreditsOfStudent",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "courserId",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "credits",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "score",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "issueDate",
+								"type": "uint256"
+							},
+							{
+								"internalType": "bool",
+								"name": "isModified",
+								"type": "bool"
+							},
+							{
+								"internalType": "uint256",
+								"name": "modifyNum",
+								"type": "uint256"
+							},
+							{
+								"internalType": "bool",
+								"name": "isRevoked",
+								"type": "bool"
+							},
+							{
+								"internalType": "string",
+								"name": "issuingInstitution",
+								"type": "string"
+							},
+							{
+								"internalType": "bool",
+								"name": "isTransferred",
+								"type": "bool"
+							},
+							{
+								"internalType": "string",
+								"name": "targetInstitution",
+								"type": "string"
+							}
+						],
+						"internalType": "struct Creditcertification.Credit[]",
+						"name": "creditList",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "student",
+						"type": "address"
+					}
+				],
+				"name": "getStudentCreditByMechanism",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "courserId",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "credits",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "score",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "issueDate",
+								"type": "uint256"
+							},
+							{
+								"internalType": "bool",
+								"name": "isModified",
+								"type": "bool"
+							},
+							{
+								"internalType": "uint256",
+								"name": "modifyNum",
+								"type": "uint256"
+							},
+							{
+								"internalType": "bool",
+								"name": "isRevoked",
+								"type": "bool"
+							},
+							{
+								"internalType": "string",
+								"name": "issuingInstitution",
+								"type": "string"
+							},
+							{
+								"internalType": "bool",
+								"name": "isTransferred",
+								"type": "bool"
+							},
+							{
+								"internalType": "string",
+								"name": "targetInstitution",
+								"type": "string"
+							}
+						],
+						"internalType": "struct Creditcertification.Credit[]",
+						"name": "creditList",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "isAdmin",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "student",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "courseId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "newCredits",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "newScore",
+						"type": "uint256"
+					}
+				],
+				"name": "modifyCredit",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "student",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "courserId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "credits",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "score",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "issuingInstitution",
+						"type": "string"
+					}
+				],
+				"name": "recordCredit",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_admin",
+						"type": "address"
+					}
+				],
+				"name": "removeAdmin",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "teacher",
+						"type": "address"
+					}
+				],
+				"name": "removeTeacher",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "renounceOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "courseId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "targetInstitution",
+						"type": "string"
+					}
+				],
+				"name": "requestCreditTransfer",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "studentCourseIds",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "studentCredits",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "courserId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "credits",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "score",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "issueDate",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "isModified",
+						"type": "bool"
+					},
+					{
+						"internalType": "uint256",
+						"name": "modifyNum",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "isRevoked",
+						"type": "bool"
+					},
+					{
+						"internalType": "string",
+						"name": "issuingInstitution",
+						"type": "string"
+					},
+					{
+						"internalType": "bool",
+						"name": "isTransferred",
+						"type": "bool"
+					},
+					{
+						"internalType": "string",
+						"name": "targetInstitution",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "teachers",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "transferOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"Credits/credits.sol": "Creditcertification"
+		},
+		"evmVersion": "shanghai",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": true,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"Credits/credits.sol": {
+			"keccak256": "0xdcea8fca8e7b3930a860ef1a12f2093b50ab9cd3f49983bdd45d500bb485f0ee",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://3c4875c500f854d46a6751e6cad31b54f3ef375ad99af5de5474a7f58728e3a1",
+				"dweb:/ipfs/QmehnaFoiZM5bmXUXMjkBrZ4quA69GppNa58AU9Gj5t8hP"
+			]
+		}
+	},
+	"version": 1
+}
