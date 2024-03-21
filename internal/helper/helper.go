@@ -19,10 +19,12 @@ import (
 )
 
 type UserClaims struct {
-	Identity  string `json:"identity"`
-	Name      string `json:"name"`
-	IsAdmin   int    `json:"is_admin"`
-	IsTeacher int    `json:"is_teacher"`
+	Identity    string `json:"identity"`
+	Name        string `json:"name"`
+	IsAdmin     int    `json:"is_admin"`
+	IsTeacher   int    `json:"is_teacher"`
+	IsTop       int    `json:"is_top"`
+	IsMechanism int    `json:"is_mechanism"`
 	jwt.StandardClaims
 }
 
@@ -68,12 +70,14 @@ var myKey = []byte("gin-gorm-oj-key")
 
 // GenerateToken
 // 生成 token
-func GenerateToken(identity, name string, isAdmin int, isTeacher int) (string, error) {
+func GenerateToken(identity, name string, isAdmin int, isTeacher int, isTop int, IsMechanism int) (string, error) {
 	UserClaim := &UserClaims{
 		Identity:       identity,
 		Name:           name,
 		IsAdmin:        isAdmin,
 		IsTeacher:      isTeacher,
+		IsTop:          isTop,
+		IsMechanism:    IsMechanism,
 		StandardClaims: jwt.StandardClaims{},
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, UserClaim)

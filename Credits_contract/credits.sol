@@ -66,16 +66,28 @@ contract Creditcertification is Ownable{
         uint256 modifyNum;//修改次数
         bool isRevoked; // 新增字段，表示学分是否被撤销
         string issuingInstitution; // 授予学分的教育机构
-        bool isTransferred;
+        bool isTransferred;//是否被转出
         string targetInstitution; // 学分转移的目标机构
     }
 
+    //转出记录
     struct CreditTransfer {
-        uint256 courseId;
-        string targetInstitution;
-        bool isApproved;
-        bool isExecuted;
-}
+        uint256 courseId;//课程id
+        string targetInstitution;//转出的目标机构
+        bool isApproved;//是否被允许转出
+        bool isExecuted;//是否完成转让
+    }
+
+    //课程信息
+    struct CourserInfo{
+        uint256 courserId;//课程id
+        string courserName;//课程名字
+        uint256 credits;//课程学分
+        uint256 createTime;//课程创建时间
+    }
+
+    //课程id=>课程info
+    mapping (uint256=>CourserInfo)public courserInfo;
 
     //学生=》k课程编号=》学分数组
     mapping(address => mapping(uint => Credit)) public studentCredits;
@@ -102,10 +114,22 @@ contract Creditcertification is Ownable{
     }
 
     //添加课程
-    function addCourse(uint256 courseId)external onlyAdmin{
+    function addCourse(uint256 courseId,uint256 credits,string memory courseName)external onlyAdmin{
         require(!courseExists[courseId],"Course already exists");
         courseExists[courseId]=true;
         courseLists.push(courseId);
+        courserInfo[courseId]=CourserInfo(
+            courseId,
+            courseName,
+            credits,
+            block.timestamp
+        );
+    }
+
+    //查询课程详情
+    function getCourseInfo(uint256 courseId)external returns(CourserInfo memory){
+        require(courseExists[courseId]=true,"Course not exists");
+        return courserInfo[courseId];
     }
     
     //添加老师
@@ -138,6 +162,7 @@ contract Creditcertification is Ownable{
 
         studentCourseIds[student].push(courserId);
     }
+
 
     //获取所有课程id
     function getAllCourseID()external view returns(uint[] memory){
@@ -257,9 +282,6 @@ contract Creditcertification is Ownable{
 
         return creditTransferRequests[student];
 }
-
-
-
 
 
 }

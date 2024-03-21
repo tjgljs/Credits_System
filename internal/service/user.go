@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 	"time"
 
 	"getcharzp.cn/helper"
@@ -12,9 +13,116 @@ import (
 	"gorm.io/gorm"
 )
 
+// AddTeacher 根据钱包地址将用户标记为管理员
+// @Tags 顶级管理员私有方法
+// @Summary 添加管理员
+
+func AddAdmin(c *gin.Context) {
+	adminWallet := c.PostForm("adminWallet")
+
+	if adminWallet == "" {
+
+		c.JSON(http.StatusOK, gin.H{
+
+			"code": -1,
+
+			"msg": "钱包地址不能为空",
+		})
+		return
+	}
+
+	user := new(models.UserBasic)
+
+	result := models.DB.Where("public_key = ?", adminWallet).First(&user)
+
+	fmt.Printf("user: %v\n", user)
+
+	if result.Error == gorm.ErrRecordNotFound {
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "找不到对应的用户",
+		})
+		return
+	}
+
+	if user.IsAdmin == 1 {
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "用户已经是管理员",
+		})
+		return
+	}
+
+	// 更新用户为管理员
+	result = models.DB.Model(&user).Update("is_admin", 1)
+
+	if result.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+
+			"code": -1,
+			"msg":  "更新管理员状态失败",
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"code": 0,
+		"msg":  "用户成功标记为管理员",
+	})
+}
+
+// RemoveTeacher
+// @Tags 顶级管理员私有方法
+// @Summary 移除管理员
+
+func RemoveAdmin(c *gin.Context) {
+	adminWallet := c.PostForm("adminWallet")
+	if adminWallet == "" {
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "钱包地址不能为空",
+		})
+		return
+	}
+
+	user := new(models.UserBasic)
+	result := models.DB.Where("public_key = ?", adminWallet).First(&user)
+
+	if result.Error == gorm.ErrRecordNotFound {
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "找不到对应的用户",
+		})
+		return
+	}
+
+	if user.IsAdmin == 0 {
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "用户不是管理员",
+		})
+		return
+	}
+
+	// 更新用户为管理员
+	result = models.DB.Model(&user).Update("is_admin", 0)
+	if result.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"code": -1,
+			"msg":  "更新管理员状态失败",
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"code": 0,
+		"msg":  "用户成功移除管理员身份",
+	})
+}
+
 // AddTeacher 根据钱包地址将用户标记为教师
 // @Tags 管理员私有方法
-// @Summary 移除老师
+// @Summary 添加老师
 
 func AddTeacher(c *gin.Context) {
 	teacherWallet := c.PostForm("teacherWallet")
@@ -129,7 +237,7 @@ func GetUserDetail(c *gin.Context) {
 	if publicKey == "" {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
-			"msg":  "用户唯一标识不能为空",
+			"msg":  "用户钱包地址不能为空",
 		})
 		return
 	}
@@ -185,7 +293,7 @@ func Login(c *gin.Context) {
 	}
 	fmt.Printf("data: %v\n", data.IsAdmin)
 
-	token, err := helper.GenerateToken(data.Identity, data.Name, data.IsAdmin, data.IsTeacher)
+	token, err := helper.GenerateToken(data.Identity, data.Name, data.IsAdmin, data.IsTeacher, data.IsTop, data.IsMechanism)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
@@ -196,11 +304,13 @@ func Login(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"code": 200,
 		"data": map[string]interface{}{
-			"token":      token,
-			"is_admin":   data.IsAdmin,
-			"is_teacher": data.IsTeacher,
-			"is_top":     data.IsTop,
+			"token":        token,
+			"is_admin":     data.IsAdmin,
+			"is_teacher":   data.IsTeacher,
+			"is_top":       data.IsTop,
+			"is_mechanism": data.IsMechanism,
 		},
+		"msg": "恭喜你 登录成功",
 	})
 }
 
@@ -251,7 +361,19 @@ func Register(c *gin.Context) {
 	name := c.PostForm("name")
 	password := c.PostForm("password")
 	phone := c.PostForm("phone")
-	if mail == "" || userCode == "" || name == "" || password == "" {
+	IsMechanism := c.PostForm("IsMechanism")
+	newIsMechanism, err1 := strconv.Atoi(IsMechanism)
+
+	if err1 != nil {
+		log.Printf("Get Code Error:%v \n", err1)
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "系统错误",
+		})
+		return
+	}
+
+	if mail == "" || userCode == "" || name == "" || password == "" || IsMechanism == "" {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
 			"msg":  "参数不正确",
@@ -297,15 +419,16 @@ func Register(c *gin.Context) {
 	userIdentity := helper.GetUUID()
 	privateKey, walletAddress := helper.CreatePrivateKey()
 	data := &models.UserBasic{
-		Identity:   userIdentity,
-		Name:       name,
-		Password:   helper.GetMd5(password),
-		Phone:      phone,
-		Mail:       mail,
-		PrivateKey: privateKey,
-		PublicKey:  walletAddress,
-		CreatedAt:  models.MyTime(time.Now()),
-		UpdatedAt:  models.MyTime(time.Now()),
+		Identity:    userIdentity,
+		Name:        name,
+		Password:    helper.GetMd5(password),
+		Phone:       phone,
+		Mail:        mail,
+		PrivateKey:  privateKey,
+		PublicKey:   walletAddress,
+		IsMechanism: newIsMechanism,
+		CreatedAt:   models.MyTime(time.Now()),
+		UpdatedAt:   models.MyTime(time.Now()),
 	}
 	fmt.Printf("data: %v\n", &data)
 	err = models.DB.Create(data).Error
@@ -318,7 +441,7 @@ func Register(c *gin.Context) {
 	}
 
 	// 生成 token
-	token, err := helper.GenerateToken(userIdentity, name, data.IsAdmin, data.IsTeacher)
+	token, err := helper.GenerateToken(userIdentity, name, data.IsAdmin, data.IsTeacher, data.IsTop, data.IsMechanism)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
@@ -329,7 +452,9 @@ func Register(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"code": 200,
 		"data": map[string]interface{}{
-			"token": token,
+			"token":      token,
+			"privateKey": privateKey,
 		},
+		"msg": "注册成功",
 	})
 }

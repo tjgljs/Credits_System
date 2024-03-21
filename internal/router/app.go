@@ -25,9 +25,14 @@ func Router() *gin.Engine {
 	// 管理员私有方法
 	authAdmin := r.Group("/admin", middlewares.AuthAdminCheck())
 	//authAdmin := r.Group("/admin")
-	// 问题创建
+
 	authAdmin.POST("/add_teacher", service.AddTeacher)
 	authAdmin.POST("/remove_teacher", service.RemoveTeacher)
+
+	//顶级管理员的私有方法
+	authTopAdmin := r.Group("/topAdmin", middlewares.AuthTopAdminCheck())
+	authTopAdmin.POST("add_admin", service.AddAdmin)
+	authTopAdmin.POST("remove_admin", service.RemoveAdmin)
 
 	return r
 }
