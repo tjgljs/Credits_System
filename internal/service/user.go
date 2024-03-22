@@ -293,7 +293,7 @@ func Login(c *gin.Context) {
 	}
 	fmt.Printf("data: %v\n", data.IsAdmin)
 
-	token, err := helper.GenerateToken(data.Identity, data.Name, data.IsAdmin, data.IsTeacher, data.IsTop, data.IsMechanism)
+	token, err := helper.GenerateToken(data.Identity, data.Name, data.IsAdmin, data.IsTeacher, data.IsTop, data.IsMechanism, data.IsStudent)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
@@ -309,6 +309,7 @@ func Login(c *gin.Context) {
 			"is_teacher":   data.IsTeacher,
 			"is_top":       data.IsTop,
 			"is_mechanism": data.IsMechanism,
+			"is_student":   data.IsStudent,
 		},
 		"msg": "恭喜你 登录成功",
 	})
@@ -362,7 +363,9 @@ func Register(c *gin.Context) {
 	password := c.PostForm("password")
 	phone := c.PostForm("phone")
 	IsMechanism := c.PostForm("IsMechanism")
+	IsStudent := c.PostForm("IsStudent")
 	newIsMechanism, err1 := strconv.Atoi(IsMechanism)
+	newIsStudent, err2 := strconv.Atoi(IsStudent)
 
 	if err1 != nil {
 		log.Printf("Get Code Error:%v \n", err1)
@@ -373,7 +376,16 @@ func Register(c *gin.Context) {
 		return
 	}
 
-	if mail == "" || userCode == "" || name == "" || password == "" || IsMechanism == "" {
+	if err2 != nil {
+		log.Printf("Get Code Error:%v \n", err2)
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "系统错误",
+		})
+		return
+	}
+
+	if mail == "" || userCode == "" || name == "" || password == "" || IsMechanism == "" || IsStudent == "" {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
 			"msg":  "参数不正确",
@@ -427,6 +439,7 @@ func Register(c *gin.Context) {
 		PrivateKey:  privateKey,
 		PublicKey:   walletAddress,
 		IsMechanism: newIsMechanism,
+		IsStudent:   newIsStudent,
 		CreatedAt:   models.MyTime(time.Now()),
 		UpdatedAt:   models.MyTime(time.Now()),
 	}
@@ -441,7 +454,7 @@ func Register(c *gin.Context) {
 	}
 
 	// 生成 token
-	token, err := helper.GenerateToken(userIdentity, name, data.IsAdmin, data.IsTeacher, data.IsTop, data.IsMechanism)
+	token, err := helper.GenerateToken(userIdentity, name, data.IsAdmin, data.IsTeacher, data.IsTop, data.IsMechanism, data.IsStudent)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,

@@ -11,6 +11,7 @@ function Register() {
     const [password, setPassword] = useState('');
     const [phone, setPhone] = useState('');
     const [isMechanism, setIsMechanism] = useState(0); // 初始化为0，表示默认不是机构
+    const [isStudent, setIsStudent] = useState(0); // 初始化为0，表示默认不是机构
     const [registerSuccess, setRegisterSuccess] = useState(false); // 添加注册成功状态
     const history = useNavigate(); // 使用 useHistory 钩子获取 history 对象
 
@@ -18,6 +19,11 @@ function Register() {
     const handleCheckboxChange = (event) => {
         // 如果复选框被勾选，则设置为1，否则为0
         setIsMechanism(event.target.checked ? 1 : 0);
+    };
+
+    const handleCheckboxChange1 = (event) => {
+        // 如果复选框被勾选，则设置为1，否则为0
+        setIsStudent(event.target.checked ? 1 : 0);
     };
 
     const handleSubmit = async (event) => {
@@ -31,7 +37,8 @@ function Register() {
                 name: name,
                 password: password,
                 phone: phone,
-                IsMechanism: isMechanism ? 1 : 0 // 将布尔值转换为数字，1 表示勾选了机构，0 表示未勾选
+                IsMechanism: isMechanism ? 1 : 0, // 将布尔值转换为数字，1 表示勾选了机构，0 表示未勾选
+                isStudent:isStudent?1:0
             };
 
             // 使用 qs 库将数据转换为 application/x-www-form-urlencoded 格式
@@ -143,6 +150,16 @@ function Register() {
                             type="checkbox"
                             checked={isMechanism === 1} // 当isMechanism为1时，复选框被勾选
                             onChange={handleCheckboxChange} // 使用新的状态处理函数
+                        />
+                    </label>
+            </div>
+            <div className="checkbox-group">
+                    <label>
+                        是否为学生：
+                        <input
+                            type="checkbox"
+                            checked={isStudent === 1} // 当isStudent为1时，复选框被勾选
+                            onChange={handleCheckboxChange1} // 使用新的状态处理函数
                         />
                     </label>
             </div>

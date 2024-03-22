@@ -3,28 +3,14 @@ import { Link,useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import qs from 'qs'; // 引入 qs 库
 import '../Login.css';
-import { Button, Flex } from 'antd';
 
 function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate(); // 用于导航到其他页面
 
-    const [loadings, setLoadings] = useState([]);
-    const enterLoading = (index) => {
-      setLoadings((prevLoadings) => {
-        const newLoadings = [...prevLoadings];
-        newLoadings[index] = true;
-        return newLoadings;
-      });
-      setTimeout(() => {
-        setLoadings((prevLoadings) => {
-          const newLoadings = [...prevLoadings];
-          newLoadings[index] = false;
-          return newLoadings;
-        });
-      }, 6000);
-    };
+    
+   
 
     const handleSubmit = async (event) => {
       event.preventDefault();
@@ -45,8 +31,30 @@ function Login() {
               }
           });
           if (response.data.code === 200) {
-              console.log('登录成功:', response.data);
-              navigate('/homepage'); // 确保此路由是正确的
+            console.log('登录成功:', response.data);
+            localStorage.setItem('token',response.data.data.token);
+            localStorage.setItem('is_admin',response.data.data.is_admin);
+            localStorage.setItem('is_top',response.data.data.is_top);
+            localStorage.setItem('is_mechanism',response.data.data.is_mechanism)
+            localStorage.setItem('is_teacher',response.data.data.is_teacher)
+            localStorage.setItem('is_student',response.data.data.is_student)
+            if(response.data.data.is_admin===1){
+                navigate('/admin')
+            }
+            if(response.data.data.is_top===1){
+                navigate('/topAdmin')
+            }
+            if(response.data.data.is_mechanism===1){
+                navigate('/mechanism')
+            }
+            if(response.data.data.is_teacher===1){
+                navigate('/teacher')
+            }
+            if(response.data.data.is_student===1){
+                navigate('/student')
+            }
+
+
           } else {
               console.log('登录失败:', response.data);
               alert('登录失败: ' + response.data.msg); // 确保后端返回的字段是msg
@@ -82,16 +90,7 @@ function Login() {
                         placeholder="密码"
                     />
                 </div>
-                {/* <button type="submit" className="btn-submit">登录</button> */}
-                <Flex gap="small" vertical>
-      
-                <Flex gap="small" wrap="wrap">
-
-                <Button type="primary" loading={loadings[0]} onClick={() => enterLoading(0)}>登录</Button>
-
-                </Flex>
-
-                </Flex>
+                <button type="submit" className="btn-submit">登录</button>
 
             </form>
             <div className="register-link">
@@ -99,17 +98,6 @@ function Login() {
             </div>
             {/* 其他内容 */}
             
-
-
-    <Flex gap="small" vertical>
-      
-      <Flex gap="small" wrap="wrap">
-
-      <Button type="primary" loading={loadings[0]} onClick={() => handleSubmit}>登录</Button>
-
-      </Flex>
-
-    </Flex>
 
         </div>
     );

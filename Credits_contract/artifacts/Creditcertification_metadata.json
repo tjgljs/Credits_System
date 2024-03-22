@@ -87,6 +87,16 @@
 						"internalType": "uint256",
 						"name": "courseId",
 						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "credits",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "courseName",
+						"type": "string"
 					}
 				],
 				"name": "addCourse",
@@ -214,6 +224,40 @@
 			{
 				"inputs": [
 					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "courserInfo",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "courserId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "courserName",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "credits",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "createTime",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "address",
 						"name": "",
 						"type": "address"
@@ -279,6 +323,47 @@
 					}
 				],
 				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "courseId",
+						"type": "uint256"
+					}
+				],
+				"name": "getCourseInfo",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "courserId",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "courserName",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "credits",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "createTime",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct Creditcertification.CourserInfo",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -741,9 +826,9 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"Credits/credits.sol": "Creditcertification"
+			"Credits_contract/credits.sol": "Creditcertification"
 		},
-		"evmVersion": "shanghai",
+		"evmVersion": "byzantium",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -755,12 +840,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"Credits/credits.sol": {
-			"keccak256": "0xdcea8fca8e7b3930a860ef1a12f2093b50ab9cd3f49983bdd45d500bb485f0ee",
+		"Credits_contract/credits.sol": {
+			"keccak256": "0x392a8469efe6be30e64b93e0d7503b074efc6fa248577bf82416d3b21082ebce",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://3c4875c500f854d46a6751e6cad31b54f3ef375ad99af5de5474a7f58728e3a1",
-				"dweb:/ipfs/QmehnaFoiZM5bmXUXMjkBrZ4quA69GppNa58AU9Gj5t8hP"
+				"bzz-raw://92994e68ba64a662d2ff6c83579334636ae5a67c7bcf6f4b99122ac6813b9542",
+				"dweb:/ipfs/QmZYcsVGNPK9CCSPpcG5DycM5CfVqFB9ggGHtnY39xXMwg"
 			]
 		}
 	},

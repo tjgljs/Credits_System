@@ -20,6 +20,7 @@ type UserBasic struct {
 	IsAdmin     int            `gorm:"column:is_admin;type:tinyint(1);" json:"is_admin"`         // 是否是管理员【0-否，1-是】
 	IsTop       int            `gorm:"column:is_top;type:tinyint(1);" json:"is_top"`             // 是否是顶级管理员【0-否，1-是】
 	IsMechanism int            `gorm:"column:is_mechanism;type:tinyint(1);" json:"is_mechanism"` // 是否是第三方企业【0-否，1-是】
+	IsStudent   int            `gorm:"column:is_student;type:tinyint(1);" json:"is_student"`     // 是否是学生【0-否，1-是】
 
 }
 
