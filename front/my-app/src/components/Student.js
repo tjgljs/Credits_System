@@ -1,45 +1,49 @@
-// StudentCredits.js
-import React, { useState, useEffect } from 'react';
-import { useContract } from './Metamask';
+import React, { useContext, useState, useEffect } from 'react';
+import { ContractContext } from './Metamask'; 
 
 const StudentCredits = () => {
-    const { contract } = useContract();
-    console.log(contract)
-    const [credits, setCredits] = useState(null);
-
-    const fetchCredits = async () => {
-        if (contract) {
-            try {
-                // 调用智能合约的方法
-                const creditsList = await contract.getCreditsOfStudent();
-                setCredits(creditsList);
-                console.log(creditsList)
-            } catch (error) {
-                console.error('Error fetching credits:', error);
-            }
-        }
-    };
+    const { contract } = useContext(ContractContext);
+    const [credits, setCredits] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        const fetchCredits = async () => {
+            if (!contract) {
+                console.log("Contract not available yet.");
+                return;
+            }
+            console.log("Attempting to fetch credits");
+            try {
+                const creditsList = await contract.getCreditsOfStudent();
+                console.log("credits", creditsList);
+                setCredits(creditsList);
+            } catch (error) {
+                console.error('Error fetching credits:', error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
         fetchCredits();
     }, [contract]);
 
     return (
         <div>
             <h2>My Credits</h2>
-            {credits ? (
+            {isLoading ? (
+                <p>Loading credits...</p>
+            ) : credits.length > 0 ? (
                 <ul>
                     {credits.map((credit, index) => (
                         <li key={index}>
                             Course ID: {credit.courseId.toString()}, 
                             Credits: {credit.credits.toString()}, 
                             Score: {credit.score.toString()}
-                            {/* Add other credit properties if needed */}
                         </li>
                     ))}
                 </ul>
             ) : (
-                <p>Loading credits...</p>
+                <p>No credits available.</p>
             )}
         </div>
     );

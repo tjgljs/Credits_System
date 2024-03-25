@@ -1,36 +1,24 @@
-import React, { useState, useEffect ,createContext, useContext} from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 
-// 创建一个新的 Context
-const ContractContext = createContext(null);
-
-// 使用Context的组件可以使用这个钩子来访问 contract 和 connectWallet
-export const useContract = () => useContext(ContractContext);
+export const ContractContext = createContext();
 
 export const ContractProvider = ({ children }) => {
-    const [signer, setSigner] = useState(null);
     const [contract, setContract] = useState(null);
     const [currentAccount, setCurrentAccount] = useState(null);
 
-    // 连接MetaMask钱包
-    const connectWallet = async () => {
-        if (window.ethereum) {
-            try {
-                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                setCurrentAccount(accounts[0]);
-                const provider = new ethers.BrowserProvider(window.ethereum);
-                setSigner(provider.getSigner());
-            } catch (error) {
-                console.error("Error connecting to MetaMask", error);
-            }
-        } else {
-            alert("Please install MetaMask!");
+    const connectWalletAndGetContract = async () => {
+        if (!window.ethereum) {
+            console.error("MetaMask not found");
+            return;
         }
-    };
 
-    // 初始化合约
-    useEffect(() => {
-        if (signer) {
+        try {
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            setCurrentAccount(accounts[0]);
+            const provider = new ethers.BrowserProvider(window.ethereum);
+            const signer = await provider.getSigner();
+            const contractAddress = '0xAf44d766506E9CcA560e047a7F62D2e8Ac3F8Ff7'; // Your Contract Address
             const contractABI = [
                 {
                     "inputs": [
@@ -839,19 +827,22 @@ export const ContractProvider = ({ children }) => {
                     "stateMutability": "view",
                     "type": "function"
                 }
-            ]; // 智能合约的ABI
-            const contractAddress = '0x5b1869D9A4C187F2EAa108f3062412ecf0526b24'; // 智能合约的地址
-
+            ]; // Your Contract ABI
             const newContract = new ethers.Contract(contractAddress, contractABI, signer);
             setContract(newContract);
-            console.log(contract)
+            console.log("new",newContract)
+        } catch (error) {
+            console.error("Error connecting to MetaMask", error);
         }
-    }, [signer]);
+    };
+
+    useEffect(() => {
+        connectWalletAndGetContract();
+    }, []);
 
     return (
-        <ContractContext.Provider value={{ contract, connectWallet, currentAccount }}>
+        <ContractContext.Provider value={{ contract, currentAccount }}>
             {children}
         </ContractContext.Provider>
     );
 };
-
