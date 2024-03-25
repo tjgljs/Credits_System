@@ -8,11 +8,11 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Teacher from './components/Teacher';
 import Top from './components/Top';
 import Mechanism from './components/Mechanism';
-import { ContractProvider } from './components/Metamask';
+// import { ContractProvider } from './components/Metamask';
 
 function App() {
     return (
-        <ContractProvider>
+        // <ContractProvider>
         <Router>
             <Routes>
                 <Route path="/" element={<Login />} />
@@ -41,7 +41,7 @@ function App() {
 
             </Routes>
         </Router>
-        </ContractProvider>
+        // </ContractProvider>
     );
 }
 

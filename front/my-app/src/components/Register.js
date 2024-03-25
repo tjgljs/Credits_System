@@ -3,8 +3,36 @@ import '../Register.css'; // 引入样式文件
 import { Link , useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import qs from 'qs'; // 引入 qs 库
+import { Button, message, Popconfirm  } from 'antd';
 
 function Register() {
+    const [messageApi, contextHolder] = message.useMessage();
+
+    
+
+    const handleSendCode = async () => {
+        try {
+          const response = await axios.post('http://localhost:8080/send-code', `email=${encodeURIComponent(email)}`);
+
+          console.log(response.data.code);
+
+          if(response.data.code === 200){
+            messageApi.open({
+              type: 'loading',
+              content: '正在发送验证码',
+              duration: 2.5,
+            }).then(() => {
+              messageApi.success('验证码发送成功', 2.5);
+            });
+          } else if(response.data.code === -1){
+            messageApi.info('发送失败', 2.5);
+          }
+        } catch (error) {
+          console.error('请求发送验证码失败:', error);
+          messageApi.error('请求发送验证码失败');
+        }
+      };
+
     const [email, setEmail] = useState('');
     const [code, setCode] = useState('');
     const [name, setName] = useState('');
@@ -38,7 +66,7 @@ function Register() {
                 password: password,
                 phone: phone,
                 IsMechanism: isMechanism ? 1 : 0, // 将布尔值转换为数字，1 表示勾选了机构，0 表示未勾选
-                isStudent:isStudent?1:0
+                IsStudent:isStudent?1:0
             };
 
             // 使用 qs 库将数据转换为 application/x-www-form-urlencoded 格式
@@ -54,7 +82,7 @@ function Register() {
             console.log('注册响应:', response.data);
 
             if(response.data.code===200){
-                alert('恭喜你 注册成功！')
+                alert(`恭喜你 注册成功！请记住你的私钥：${response.data.data.privateKey}`)
                 setRegisterSuccess(true)
                 history('/')
             }else{
@@ -73,17 +101,6 @@ function Register() {
         }
     };
 
-
-    const handleSendCode = async () => {
-        try {
-            const response = await axios.post('http://localhost:8080/send-code', `email=${encodeURIComponent(email)}`);
-            console.log(response.data);
-            // 处理响应
-        } catch (error) {
-            console.error('发送验证码失败:', error);
-            // 处理错误
-        }
-    };
 
     return (
         <div className="register-container">
@@ -130,7 +147,7 @@ function Register() {
                         placeholder="邮箱"
                         required
                     />
-                    <button type="button" onClick={handleSendCode}>发送验证码</button>
+                    <Button  onClick={handleSendCode}>发送验证码</Button>
                 </div>
                 <div className="form-group">
                     <input
@@ -168,6 +185,10 @@ function Register() {
 
             {registerSuccess && <p>注册成功！</p>} {/* 注册成功时显示提示 */}
             <Link to="/">已有账号？登录</Link>
+
+            {contextHolder}
+
+            
         </div>
     );
 }

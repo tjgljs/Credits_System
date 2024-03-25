@@ -830,7 +830,7 @@ export const ContractProvider = ({ children }) => {
             ]; // Your Contract ABI
             const newContract = new ethers.Contract(contractAddress, contractABI, signer);
             setContract(newContract);
-            console.log("new",newContract)
+           
         } catch (error) {
             console.error("Error connecting to MetaMask", error);
         }

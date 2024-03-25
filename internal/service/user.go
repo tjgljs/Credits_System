@@ -364,8 +364,11 @@ func Register(c *gin.Context) {
 	phone := c.PostForm("phone")
 	IsMechanism := c.PostForm("IsMechanism")
 	IsStudent := c.PostForm("IsStudent")
+
 	newIsMechanism, err1 := strconv.Atoi(IsMechanism)
+	fmt.Printf("IsMechanism: %v\n", IsMechanism)
 	newIsStudent, err2 := strconv.Atoi(IsStudent)
+	fmt.Printf("IsStudent: %v\n", IsStudent)
 
 	if err1 != nil {
 		log.Printf("Get Code Error:%v \n", err1)
