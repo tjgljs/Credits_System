@@ -17,7 +17,7 @@ const ProtectedRoute = ({ component: Component, role }) => {
     if(is_student) userRole="student";
 
     // 如果用户有令牌且角色匹配，则渲染组件，否则重定向到登录页面
-    return token && userRole === role ? <Component /> : <Navigate to="/login" />;
+    return token && userRole === role ? <Component /> : <Navigate to="/homePage" />;
 };
 
 export default ProtectedRoute;

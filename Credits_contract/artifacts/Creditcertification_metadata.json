@@ -576,11 +576,6 @@
 					},
 					{
 						"internalType": "uint256",
-						"name": "newCredits",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
 						"name": "newScore",
 						"type": "uint256"
 					}
@@ -613,11 +608,6 @@
 					{
 						"internalType": "uint256",
 						"name": "courserId",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "credits",
 						"type": "uint256"
 					},
 					{
@@ -841,11 +831,11 @@
 	},
 	"sources": {
 		"credits.sol": {
-			"keccak256": "0x392a8469efe6be30e64b93e0d7503b074efc6fa248577bf82416d3b21082ebce",
+			"keccak256": "0x89a3a7952b90f9544f722af0a5bf158567fcd7163cee0df825d90710773f175a",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://92994e68ba64a662d2ff6c83579334636ae5a67c7bcf6f4b99122ac6813b9542",
-				"dweb:/ipfs/QmZYcsVGNPK9CCSPpcG5DycM5CfVqFB9ggGHtnY39xXMwg"
+				"bzz-raw://f780e91468204a86d47c44e60d51552e5c7f79d64c2cfcf678c3de45b047d979",
+				"dweb:/ipfs/QmQWeEfq8fhJut7mN84p51ZHRtt3frk4Q7zTS46Vvk22u5"
 			]
 		}
 	},

@@ -8,10 +8,6 @@ function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate(); // 用于导航到其他页面
-
-    
-   
-
     const handleSubmit = async (event) => {
       event.preventDefault();
       console.log("Username:", username);
@@ -38,21 +34,26 @@ function Login() {
             localStorage.setItem('is_mechanism',response.data.data.is_mechanism)
             localStorage.setItem('is_teacher',response.data.data.is_teacher)
             localStorage.setItem('is_student',response.data.data.is_student)
-            if(response.data.data.is_admin===1){
-                navigate('/admin')
-            }
-            if(response.data.data.is_top===1){
-                navigate('/topAdmin')
-            }
-            if(response.data.data.is_mechanism===1){
-                navigate('/mechanism')
-            }
-            if(response.data.data.is_teacher===1){
-                navigate('/teacher')
-            }
-            if(response.data.data.is_student===1){
-                navigate('/student')
-            }
+
+            // if(response.data.data.is_admin===1){
+            //     navigate('/admin')
+            // }
+            // if(response.data.data.is_top===1){
+            //     navigate('/topAdmin')
+            // }
+            // if(response.data.data.is_mechanism===1){
+            //     navigate('/mechanism')
+            // }
+            // if(response.data.data.is_teacher===1){
+            //     navigate('/teacher')
+            // }
+            // if(response.data.data.is_student===1){
+            //     navigate('/student')
+            // }
+
+            navigate('/homePage'); 
+
+
 
 
           } else {

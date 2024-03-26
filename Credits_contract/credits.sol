@@ -147,18 +147,22 @@ contract Creditcertification is Ownable{
     }
 
     //老师上传学分认证信息
-    function recordCredit(address student,uint256 courserId,uint256 credits,uint256 score,string memory issuingInstitution)public onlyTeacher{
+    function recordCredit(address student,uint256 courserId,uint256 score,string memory issuingInstitution)public onlyTeacher{
         require(student!=address(0),"Invalid address");
 
         require(courserId>=0,"Invalid course ID");
 
-        require(credits>0,"Invalid credits");
+        //require(credits>0,"Invalid credits");
 
         require(courseExists[courserId]==true,"course not exit");
 
         uint currentTimestamp = block.timestamp;
 
-        studentCredits[student][courserId]=Credit(courserId, credits, score, currentTimestamp,true,0,false,issuingInstitution,false,"");
+        uint newredits=courserInfo[courserId].credits;
+
+        uint endCredits=score*newredits;
+
+        studentCredits[student][courserId]=Credit(courserId, endCredits, score, currentTimestamp,false,0,false,issuingInstitution,false,"");
 
         studentCourseIds[student].push(courserId);
     }
@@ -210,18 +214,19 @@ contract Creditcertification is Ownable{
     }
 
     // 用于老师修改学分的函数
-    function modifyCredit(address student, uint256 courseId, uint256 newCredits, uint256 newScore) external  onlyTeacher {
+    function modifyCredit(address student, uint256 courseId,  uint256 newScore) external  onlyTeacher {
         require(studentCredits[student][courseId].issueDate != 0, "Credit does not exist");
 
         require(student!=address(0),"Invalid address");
 
         require(courseId>=0,"Invalid course ID");
 
-        require(newCredits>0,"Invalid credits");
+
 
         require(!studentCredits[student][courseId].isRevoked, "Credit already revoked");
 
-        uint256 num=studentCredits[student][courseId].modifyNum;
+        uint256 num=studentCredits[student][courseId].modifyNum+1;
+        uint256 newCredits=newScore*courserInfo[courseId].credits;
         
         // 创建新的修改后的学分记录
         studentCredits[student][courseId].credits=newCredits;

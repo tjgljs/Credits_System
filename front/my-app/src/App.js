@@ -2,33 +2,63 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
 import Register from './components/Register';
-import Student from './components/Student';
+import StudentCredits from './components/StudentCredits';
 import Admin from './components/Admin';
 import ProtectedRoute from './components/ProtectedRoute';
-import Teacher from './components/Teacher';
+import RecordCredit from './components/RecordCredit';
 import Top from './components/Top';
 import Mechanism from './components/Mechanism';
-// import { ContractProvider } from './components/Metamask';
+import Navbar from './components/Navbar'; // 引入顶部导航栏组件
+import LayoutWithMenu from './components/LayoutWithMenu';
+import HomePage from './components/HomePage';
+import Approve from './components/Approve';
+import CreditTransfer from './components/CreditTransfer';
+import CreditTransferList from './components/CreditTransfersList';
+import ModifyCredit from './components/ModifyCredit';
+import GetStudentCreditByMechanism from './components/GetStudentCreditByMechanism';
 
 function App() {
+    
     return (
-        // <ContractProvider>
         <Router>
+            <Navbar /> 
+            <LayoutWithMenu>
             <Routes>
+                <Route path="/homePage" element={<HomePage />} /> 
+                
                 <Route path="/" element={<Login />} />
 
                 <Route path="/register" element={<Register />} />
 
-                <Route path="/student" element={
-                    <ProtectedRoute component={Student} role="student" />
+                <Route path="/credits-detail" element={
+                    <ProtectedRoute component={StudentCredits} role="student" />
+                } />
+
+                <Route path="/credits-transfer" element={
+                    <ProtectedRoute component={CreditTransfer} role="student" />
+                } />
+                <Route path="/credits-transferList" element={
+                    <ProtectedRoute component={CreditTransferList} role="student" />
+                } />
+
+                <Route path="/approve" element={
+                    <ProtectedRoute component={Approve} role="student" />
                 } />
 
                 <Route path="/admin" element={
                     <ProtectedRoute component={Admin} role="admin" />
                 } />
 
-                <Route path="/teacher" element={
-                    <ProtectedRoute component={Teacher} role="teacher" />
+                <Route path="/record-credit" element={
+                    <ProtectedRoute component={RecordCredit} role="teacher" />
+                } />
+
+                <Route path="/modify-credit" element={
+                    <ProtectedRoute component={ModifyCredit} role="teacher" />
+                } />
+
+                <Route path="/get-student-credit-by-mechanism" element={
+                    <ProtectedRoute component={GetStudentCreditByMechanism} role="mechanism" />
                 } />
 
                 <Route path="/topAdmin" element={
@@ -40,8 +70,8 @@ function App() {
                 } />
 
             </Routes>
+            </LayoutWithMenu>
         </Router>
-        // </ContractProvider>
     );
 }
 
