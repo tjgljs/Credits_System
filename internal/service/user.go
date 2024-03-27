@@ -256,6 +256,39 @@ func GetUserDetail(c *gin.Context) {
 	})
 }
 
+func IsUser(c *gin.Context) {
+	publicKey := c.Query("publicKey")
+	if publicKey == "" {
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "用户钱包地址不能为空",
+		})
+		return
+	}
+
+	var count int64
+	err := models.DB.Model(&models.UserBasic{}).Where("public_key = ?", publicKey).Count(&count).Error
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "查询用户详情时发生错误: " + err.Error(),
+		})
+		return
+	}
+
+	if count == 0 {
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "用户不存在",
+		})
+	} else {
+		c.JSON(http.StatusOK, gin.H{
+			"code": 200,
+			"msg":  "用户存在",
+		})
+	}
+}
+
 // Login
 // @Tags 公共方法
 // @Summary 用户登录

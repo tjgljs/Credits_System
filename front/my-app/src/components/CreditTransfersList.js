@@ -11,6 +11,7 @@ const CreditTransferList = () => {
 
     const columns = [
         // 定义表格列
+        { title: 'Student Addr', dataIndex: 'studentAddr', key: 'studentAddr' },
         { title: 'Course ID', dataIndex: 'courseId', key: 'courseId' },
         { title: 'Target Institution', dataIndex: 'targetInstitution', key: 'targetInstitution' },
         { title: 'Is Approved', dataIndex: 'isApproved', key: 'isApproved' },
@@ -22,10 +23,11 @@ const CreditTransferList = () => {
       const formattedData = transfers.map((data, index) => {
         let rowData = {
           key: index.toString(),
-          courseId: data[0].toString(),
-          targetInstitution: data[1].toString(),
-          isApproved: data[2].toString(),
-          isExecuted: data[3].toString(),
+          studentAddr:data[0].toString(),
+          courseId: data[1].toString(),
+          targetInstitution: data[2].toString(),
+          isApproved: data[3].toString(),
+          isExecuted: data[4].toString(),
         };
       
         return rowData;

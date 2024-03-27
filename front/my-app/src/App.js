@@ -16,6 +16,10 @@ import CreditTransfer from './components/CreditTransfer';
 import CreditTransferList from './components/CreditTransfersList';
 import ModifyCredit from './components/ModifyCredit';
 import GetStudentCreditByMechanism from './components/GetStudentCreditByMechanism';
+import AddTeacher from './components/AddTeacher';
+import RemoveTeacher from './components/RemoveTeacher';
+import Cancel from './components/Cancel';
+import AllrequestCreditTransfer from './components/AllrequestCreditTransfer';
 
 function App() {
     
@@ -59,6 +63,22 @@ function App() {
 
                 <Route path="/get-student-credit-by-mechanism" element={
                     <ProtectedRoute component={GetStudentCreditByMechanism} role="mechanism" />
+                } />
+
+                <Route path="/add-teacher" element={
+                    <ProtectedRoute component={AddTeacher} role="admin" />
+                } />
+
+                <Route path="/remove-teacher" element={
+                    <ProtectedRoute component={RemoveTeacher} role="admin" />
+                } />
+
+                <Route path="/cancel-credit" element={
+                    <ProtectedRoute component={Cancel} role="admin" />
+                } />
+
+                <Route path="/all-request-credit-transfer" element={
+                    <ProtectedRoute component={AllrequestCreditTransfer} role="admin" />
                 } />
 
                 <Route path="/topAdmin" element={

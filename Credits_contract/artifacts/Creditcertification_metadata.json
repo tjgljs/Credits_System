@@ -831,11 +831,11 @@
 	},
 	"sources": {
 		"credits.sol": {
-			"keccak256": "0x89a3a7952b90f9544f722af0a5bf158567fcd7163cee0df825d90710773f175a",
+			"keccak256": "0x8c9894048ce97593fb0071f979aa39ed19b334689e9210030bd3be8a8869b70f",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://f780e91468204a86d47c44e60d51552e5c7f79d64c2cfcf678c3de45b047d979",
-				"dweb:/ipfs/QmQWeEfq8fhJut7mN84p51ZHRtt3frk4Q7zTS46Vvk22u5"
+				"bzz-raw://9d3b200e6becd0afd5302ee16d3fcdd0c3196db44e4077f7792907854314ab54",
+				"dweb:/ipfs/QmWt1qtzsZWxfiU8ohJruGQRZLNuT9YmvRYw8JUxci2nbK"
 			]
 		}
 	},

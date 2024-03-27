@@ -29,11 +29,11 @@ const items = [
       getItem('Option 11', '11'),
       getItem('Option 12', '12'),
     ]),
-    getItem('Navigation Four', 'sub5', <AppstoreOutlined />, [
-        getItem('Option 13', '13'),
-        getItem('Option 14', '14'),
-        getItem('Option 15', '15'),
-        getItem('Option 16', '16'),
+    getItem('Admin', 'sub5', <AppstoreOutlined />, [
+        getItem('AddTeacher', '13'),
+        getItem('RemoveTeacher ', '14'),
+        getItem('CancelCredit', '15'),
+        getItem('AllrequestCreditTransfer', '16'),
       ]),
   ];
 
@@ -67,6 +67,18 @@ function MenuLeft() {
     }
     if(e.key==='9'){
         navigate('/get-student-credit-by-mechanism')
+    }
+    if(e.key==='13'){
+        navigate('add-teacher')
+    }
+    if(e.key==='14'){
+        navigate('remove-teacher')
+    }
+    if(e.key==='15'){
+        navigate('cancel-credit')
+    }
+    if(e.key==='16'){
+        navigate('all-request-credit-transfer')
     }
   };
   return (
