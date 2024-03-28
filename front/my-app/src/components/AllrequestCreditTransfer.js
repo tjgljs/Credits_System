@@ -4,7 +4,6 @@ import { Avatar, List, Space, message, Radio, Button } from 'antd';
 import MyContractABI from './abi.json';
 
 const AllrequestCreditTransfer = () => {
-  const [transferIndexes, setTransferIndexes] = useState({});
   const [transfers, setTransfers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [contract, setContract] = useState(null);
@@ -23,7 +22,7 @@ const AllrequestCreditTransfer = () => {
     try {
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
-      const contractAddress = '0xab0844B396f8Af27c886559C7EE45eA10e0D5813';
+      const contractAddress = '0x87AA2FeCF0d6F1a6F73a8E103C8A3A410914C9c1';
       const newContract = new ethers.Contract(contractAddress, MyContractABI, signer);
       setContract(newContract);
     } catch (error) {
@@ -40,27 +39,16 @@ const AllrequestCreditTransfer = () => {
       try {
         setLoading(true);
         const rawTransfers = await contract.getAllrequestCreditTransfer();
-        const formattedTransfers = rawTransfers.map((transfer, index) => ({
+        console.log("rawTransfers",rawTransfers)
+        const formattedTransfers = rawTransfers.map((transfer, ) => ({
           studentAddr: transfer.studentAddr,
           courseId: transfer.courseId.toString(),
           targetInstitution: transfer.targetInstitution,
           isApproved: transfer.isApproved,
           isExecuted: transfer.isExecuted,
-          index: index
+          index: transfer.index
         }));
         setTransfers(formattedTransfers);
-
-        const newTransferIndexes = {};
-        formattedTransfers.forEach((transfer, index) => {
-            const studentAddr = transfer.studentAddr;
-            if (!newTransferIndexes[studentAddr]) {
-              newTransferIndexes[studentAddr] = [];
-            }
-            newTransferIndexes[studentAddr].push(index); // 确保这里的 index 是正确的
-          });
-          setTransferIndexes(newTransferIndexes);
-          
-        
       } catch (error) {
         console.error('Error fetching transfers:', error);
         message.error('Failed to fetch transfers');
@@ -71,25 +59,19 @@ const AllrequestCreditTransfer = () => {
   }, [contract]);
 
   useEffect(() => {
-    const intervalId = setInterval(fetchAllTransfers, 10000); // 更新数据的间隔时间
+    const intervalId = setInterval(fetchAllTransfers, 10000);
     return () => clearInterval(intervalId);
   }, [fetchAllTransfers]);
 
-  const approveTransfer = async (studentAddr, transferIndex) => {
-    console.log("transferIndexes:", transferIndexes);
-    console.log("transferIndex:", transferIndex);
+  const approveTransfer = async (studentAddr, index) => {
     if (!contract) {
       message.error('Contract not loaded');
       return;
     }
+    console.log("index",index)
 
     try {
-      const index = transferIndexes[studentAddr][transferIndex];
-      console.log("Contract:", contract);
-        console.log("Student Address:", studentAddr);
-        console.log("Resolved index:", index);
       const tx = await contract.approveCreditTransfer(studentAddr, index);
-      console.log("index",index)
       await tx.wait();
       message.success('Transfer approved successfully');
       fetchAllTransfers();
@@ -98,14 +80,13 @@ const AllrequestCreditTransfer = () => {
     }
   };
 
-  const executeTransfer = async (studentAddr, transferIndex) => {
+  const executeTransfer = async (studentAddr, index) => {
     if (!contract) {
       message.error('Contract not loaded');
       return;
     }
 
     try {
-      const index = transferIndexes[studentAddr][transferIndex];
       const tx = await contract.executeCreditTransfer(studentAddr, index);
       await tx.wait();
       message.success('Transfer executed successfully');
@@ -136,11 +117,14 @@ const AllrequestCreditTransfer = () => {
         <Space>
           <span>Pagination Align:</span>
           <Radio.Group optionType="button" value={align} onChange={(e) => setAlign(e.target.value)}>
-            {alignOptions
-.map((item) => (<Radio.Button key={item} value={item}>{item}</Radio.Button>))}
+    {alignOptions.map((item) => (
+        <Radio.Button key={item} value={item}>{item}</Radio.Button>
+    ))}
 </Radio.Group>
+
 </Space>
 </Space>
+
 <List
     loading={loading}
     itemLayout="horizontal"
@@ -148,25 +132,25 @@ const AllrequestCreditTransfer = () => {
     dataSource={transfers}
     renderItem={(item, index) => (
         <List.Item actions={[
-            <Button onClick={() => approveTransfer(item.studentAddr, transferIndexes[item.studentAddr][index])} disabled={item.isApproved}>Approve</Button>,
-            <Button onClick={() => executeTransfer(item.studentAddr, transferIndexes[item.studentAddr][index])} disabled={!item.isApproved || item.isExecuted}>Execute</Button>
-          ]}>
-        <List.Item.Meta
-          avatar={<Avatar src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${index}`} />}
-          title={`Student Address: ${item.studentAddr}`}
-          description={`
-            Course ID: ${item.courseId}, 
-            Target Institution: ${item.targetInstitution},
-            Approved: ${item.isApproved ? 'Yes' : 'No'}, 
-            Executed: ${item.isExecuted ? 'Yes' : 'No'}`
-          }
-        />
-      </List.Item>
+            <Button onClick={() => approveTransfer(item.studentAddr, item.index)} disabled={item.isApproved}>Approve</Button>,
+            <Button onClick={() => executeTransfer(item.studentAddr, item.index)} disabled={!item.isApproved || item.isExecuted}>Execute</Button>
+        ]}>
+            <List.Item.Meta
+                avatar={<Avatar src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${index}`} />}
+                title={`Student Address: ${item.studentAddr}`}
+                description={`
+                    Course ID: ${item.courseId}, 
+                    Target Institution: ${item.targetInstitution},
+                    Approved: ${item.isApproved ? 'Yes' : 'No'}, 
+                    Executed: ${item.isExecuted ? 'Yes' : 'No'}`
+                }
+            />
+        </List.Item>
     )}
-  />
+/>
+
 </>
 );
 };
 
 export default AllrequestCreditTransfer;
-

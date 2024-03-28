@@ -72,12 +72,10 @@ contract Creditcertification is Ownable{
 
     //转出记录
     struct CreditTransfer {
-        address studentAddr;
         uint256 courseId;//课程id
         string targetInstitution;//转出的目标机构
         bool isApproved;//是否被允许转出
         bool isExecuted;//是否完成转让
-        uint256 index;//索引
     }
 
     //课程信息
@@ -94,6 +92,9 @@ contract Creditcertification is Ownable{
     //学生=》k课程编号=》学分数组
     mapping(address => mapping(uint => Credit)) public studentCredits;
 
+    //每个学生的转移学分请求映射 学生——课程id数组
+    mapping(address=>uint[])public requestOfStudent;
+
     // 记录每个学生的课程ID
     mapping(address => uint[]) public studentCourseIds; 
     //是否是老师
@@ -107,9 +108,7 @@ contract Creditcertification is Ownable{
     mapping(address=>mapping(address=>uint256))public allowance;
 
     //学生发起的所有学分转移请求
-    mapping(address => CreditTransfer[]) public creditTransferRequests;
-
-    address[] public studentLists;
+    mapping(address => mapping(uint=>CreditTransfer)) public creditTransferRequests;
 
 
     modifier onlyTeacher() {
@@ -247,61 +246,58 @@ contract Creditcertification is Ownable{
         require(!studentCredits[student][courseId].isRevoked, "Credit already revoked");
         studentCredits[student][courseId].isRevoked = true;
     }
-
-     // 计算特定学生的特定课程 ID 出现的次数
-    function countCourseIdOccurrences(address student) public view returns (uint256) {
-        return creditTransferRequests[student].length;
+    
+    function isCourseIdInRequestOfStudent(address student, uint256 courseId) public view returns (bool) {
+        uint[] memory courseIds = requestOfStudent[student];
+        for (uint i = 0; i < courseIds.length; i++) {
+            if (courseIds[i] == courseId) {
+                return true; // 找到了课程ID
+            }
+        }
+        return false; // 没有找到课程ID
     }
+
 
     //学生发起学分转移请求
     function requestCreditTransfer(uint256 courseId, string memory targetInstitution) external {
         require(studentCredits[msg.sender][courseId].issueDate != 0, "Credit does not exist");
         require(!studentCredits[msg.sender][courseId].isRevoked, "Credit already revoked");
-        uint256 num=countCourseIdOccurrences(msg.sender);
-        creditTransferRequests[msg.sender].push(CreditTransfer({
-            studentAddr:msg.sender,
-            courseId: courseId,
-            targetInstitution: targetInstitution,
-            isApproved: false,
-            isExecuted: false,
-            index:num
-        }));
-         // 检查此学生地址是否已在列表中
-        bool isStudentExists = false;
-        for (uint i = 0; i < studentLists.length; i++) {
-            if (studentLists[i] == msg.sender) {
-                isStudentExists = true;
-                break;
-            }
+        //如果已经提交过该课程的转移申请
+        if(isCourseIdInRequestOfStudent(msg.sender,courseId)==true){
+            require(creditTransferRequests[msg.sender][courseId].isExecuted==true,"your request not execut");
+            //如果提交过 并且已经完成上一次学分转移 可以再次申请转移
+            creditTransferRequests[msg.sender][courseId]=CreditTransfer(courseId,targetInstitution,false,false);
+        }else{
+            //第一次提交该课程的转移申请
+            creditTransferRequests[msg.sender][courseId]=CreditTransfer(courseId,targetInstitution,false,false);
+            requestOfStudent[msg.sender].push(courseId);
         }
-
-        // 如果学生地址不存在于列表中，则添加
-        if (!isStudentExists) {
-            studentLists.push(msg.sender);
-        }
+        
+        
+        
 }
 
 
     //管理员或授权教育机构审批学分转移请求
-    function approveCreditTransfer(address student, uint index) external onlyAdmin {
+    function approveCreditTransfer(address student, uint courseId) external onlyAdmin {
 
-        require(!creditTransferRequests[student][index].isApproved, "Transfer already approved");
+        require(!creditTransferRequests[student][courseId].isApproved, "Transfer already approved");
 
-        creditTransferRequests[student][index].isApproved = true;
+        creditTransferRequests[student][courseId].isApproved = true;
 }
 
 
     //执行已批准的学分转移
-    function executeCreditTransfer(address student, uint index) external onlyAdmin{
-        require(creditTransferRequests[student][index].isApproved, "Transfer not approved");
+    function executeCreditTransfer(address student, uint courseId) external onlyAdmin{
+        require(creditTransferRequests[student][courseId].isApproved, "Transfer not approved");
 
-        require(!creditTransferRequests[student][index].isExecuted, "Transfer already executed");
+        require(!creditTransferRequests[student][courseId].isExecuted, "Transfer already executed");
 
-        studentCredits[student][creditTransferRequests[student][index].courseId].targetInstitution=creditTransferRequests[student][index].targetInstitution;
+        studentCredits[student][courseId].targetInstitution=creditTransferRequests[student][courseId].targetInstitution;
         
-        creditTransferRequests[student][index].isExecuted = true;
+        creditTransferRequests[student][courseId].isExecuted = true;
 
-        studentCredits[student][creditTransferRequests[student][index].courseId].isTransferred=true;
+        studentCredits[student][courseId].isTransferred=true;
 }
 
     //查询转移学分记录
@@ -311,30 +307,6 @@ contract Creditcertification is Ownable{
 
         return creditTransferRequests[student];
 }
-
- // 查询所有提交的学分转移记录
-    function getAllrequestCreditTransfer() external view returns (CreditTransfer[] memory) {
-        uint totalRequests = 0;
-
-        // 首先，计算所有请求的总数
-        for (uint i = 0; i < studentLists.length; i++) {
-            totalRequests += creditTransferRequests[studentLists[i]].length;
-        }
-
-        // 创建足够大的数组来保存所有请求
-        CreditTransfer[] memory allRequests = new CreditTransfer[](totalRequests);
-        uint currentRequest = 0;
-
-        // 填充返回数组
-        for (uint i = 0; i < studentLists.length; i++) {
-            for (uint j = 0; j < creditTransferRequests[studentLists[i]].length; j++) {
-                allRequests[currentRequest] = creditTransferRequests[studentLists[i]][j];
-                currentRequest++;
-            }
-        }
-
-        return allRequests;
-    }
 
 
 

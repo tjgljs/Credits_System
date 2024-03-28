@@ -186,6 +186,25 @@
 			{
 				"inputs": [
 					{
+						"internalType": "address",
+						"name": "student",
+						"type": "address"
+					}
+				],
+				"name": "countCourseIdOccurrences",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "uint256",
 						"name": "",
 						"type": "uint256"
@@ -271,6 +290,11 @@
 				"name": "creditTransferRequests",
 				"outputs": [
 					{
+						"internalType": "address",
+						"name": "studentAddr",
+						"type": "address"
+					},
+					{
 						"internalType": "uint256",
 						"name": "courseId",
 						"type": "uint256"
@@ -289,6 +313,11 @@
 						"internalType": "bool",
 						"name": "isExecuted",
 						"type": "bool"
+					},
+					{
+						"internalType": "uint256",
+						"name": "index",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -320,6 +349,51 @@
 						"internalType": "uint256[]",
 						"name": "",
 						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getAllrequestCreditTransfer",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "studentAddr",
+								"type": "address"
+							},
+							{
+								"internalType": "uint256",
+								"name": "courseId",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "targetInstitution",
+								"type": "string"
+							},
+							{
+								"internalType": "bool",
+								"name": "isApproved",
+								"type": "bool"
+							},
+							{
+								"internalType": "bool",
+								"name": "isExecuted",
+								"type": "bool"
+							},
+							{
+								"internalType": "uint256",
+								"name": "index",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct Creditcertification.CreditTransfer[]",
+						"name": "",
+						"type": "tuple[]"
 					}
 				],
 				"stateMutability": "view",
@@ -379,6 +453,11 @@
 					{
 						"components": [
 							{
+								"internalType": "address",
+								"name": "studentAddr",
+								"type": "address"
+							},
+							{
 								"internalType": "uint256",
 								"name": "courseId",
 								"type": "uint256"
@@ -397,6 +476,11 @@
 								"internalType": "bool",
 								"name": "isExecuted",
 								"type": "bool"
+							},
+							{
+								"internalType": "uint256",
+								"name": "index",
+								"type": "uint256"
 							}
 						],
 						"internalType": "struct Creditcertification.CreditTransfer[]",
@@ -773,6 +857,25 @@
 			{
 				"inputs": [
 					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "studentLists",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "address",
 						"name": "",
 						"type": "address"
@@ -831,11 +934,11 @@
 	},
 	"sources": {
 		"credits.sol": {
-			"keccak256": "0x8c9894048ce97593fb0071f979aa39ed19b334689e9210030bd3be8a8869b70f",
+			"keccak256": "0x53f6018c11c60c7b6986ae323d81c2772feb9818159cfa48fa5aead3f188fe44",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://9d3b200e6becd0afd5302ee16d3fcdd0c3196db44e4077f7792907854314ab54",
-				"dweb:/ipfs/QmWt1qtzsZWxfiU8ohJruGQRZLNuT9YmvRYw8JUxci2nbK"
+				"bzz-raw://7e93df7c93cea765d3e6ba69fe314540fac0a8881b6dcb26e0e27b2400a57278",
+				"dweb:/ipfs/QmZQcAZtYQuCbjCf7w31tfdm2ZnJjD9yUE7q9W9wysDT4R"
 			]
 		}
 	},
