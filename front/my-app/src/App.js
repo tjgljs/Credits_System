@@ -4,9 +4,9 @@ import Login from './components/Login';
 import Register from './components/Register';
 import StudentCredits from './components/StudentCredits';
 import Admin from './components/Admin';
+import Top from './components/Top';
 import ProtectedRoute from './components/ProtectedRoute';
 import RecordCredit from './components/RecordCredit';
-import Top from './components/Top';
 import Mechanism from './components/Mechanism';
 import Navbar from './components/Navbar'; // 引入顶部导航栏组件
 import LayoutWithMenu from './components/LayoutWithMenu';
@@ -20,12 +20,15 @@ import AddTeacher from './components/AddTeacher';
 import RemoveTeacher from './components/RemoveTeacher';
 import Cancel from './components/Cancel';
 import AllrequestCreditTransfer from './components/AllrequestCreditTransfer';
+import AddAdmin from './components/AddAdmin';
+import RemoveAdmin from './components/RemoveAdmin';
 
 function App() {
     
     return (
         <Router>
             <Navbar /> 
+            <div style={{ paddingTop: '60px' }}>
             <LayoutWithMenu>
             <Routes>
                 <Route path="/homePage" element={<HomePage />} /> 
@@ -81,16 +84,23 @@ function App() {
                     <ProtectedRoute component={AllrequestCreditTransfer} role="admin" />
                 } />
 
-                <Route path="/topAdmin" element={
-                    <ProtectedRoute component={Top} role="top" />
+                <Route path="/add-admin" element={
+                    <ProtectedRoute component={AddAdmin} role="top" />
+                } />
+                <Route path="/remove-admin" element={
+                    <ProtectedRoute component={RemoveAdmin} role="top" />
                 } />
 
+                <Route path="/Top" element={
+                    <ProtectedRoute component={Top} role="top" />
+                } />
                 <Route path="/mechanism" element={
                     <ProtectedRoute component={Mechanism} role="mechanism" />
                 } />
 
             </Routes>
             </LayoutWithMenu>
+            </div>
         </Router>
     );
 }

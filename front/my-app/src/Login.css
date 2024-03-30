@@ -1,9 +1,11 @@
 .login-container {
+    background: #f0f0f0; /* 或者是您希望的背景颜色 */
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* 其他样式 */
-}
+    justify-content: center;
+  }
 
 
 
@@ -12,51 +14,102 @@
 }
 
 
-.login-container {
-    background-image: url('../public/1.webp');
-    background-size: cover;
-    background-position: center;
-    width: 100%; /* 或者根据需要设置特定宽度 */
-    height: 100vh; /* 使容器占满整个视口高度 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
 
-
-
-.login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f5f5f5;
-}
-
-.login-form {
-    
-    max-width: 400px;
+.video-container {
+    position: fixed; /* 固定定位 */
+    top: 0;
+    left: 0;
     width: 100%;
-    padding: 20px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: 100%;
+    z-index: 1; /* 确保视频在底层 */
+    overflow: hidden;
 }
+
+.video-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 覆盖整个容器 */
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 半透明的黑色蒙层 */
+    z-index: 1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #myVideo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    z-index: 0; /* 确保视频在蒙层下方 */
+  }
+
+  .overlay-text1 {
+    color: white; /* 设置文字颜色 */
+    text-align: center; /* 文字居中 */
+    z-index: 2; /* 确保文字在蒙层上 */
+    margin-top: 40%; /* 调整这个值以向下移动文字位置 */
+    font-weight: bold; /* 加粗字体 */
+    font-size: 4rem; /* 调整文字大小 */
+  }
+
+
+
+
+
+.login-container {
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+    height: 100vh; /* 占满视口高度 */
+    width: 100vw; /* 占满视口宽度 */
+    position: fixed; /* 固定定位，确保始终在视口中心 */
+    top: 0;
+    left: 0;
+    z-index: 2; /* 确保在视频之上 */
+    transition: background-color 0.3s;
+}
+.login-form {
+    background: rgba(255, 255, 255, 0.5); /* 设置半透明的白色背景 */
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 320px;
+    text-align: center;
+    z-index: 3;
+    /* 其他样式保持不变 */
+}
+
 
 .form-group {
-    margin-bottom: 100px;
+    margin-bottom: 20px;
+    position: relative; /* 为了绝对定位label */
 }
 
-.login-form .form-group input {
-    padding: 5px; /* 调整内边距来改变高度感觉 */
-    height: 20px; /* 直接设置高度 */
-    margin-bottom: 55px; 
+.form-group input {
     width: 100%;
-    display: block;
-    margin: 0 auto;
-    /* 其他样式 */
-}
+    border: 2px solid #e6e6e6; /* 灰色边框 */
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border-radius: 20px; /* 圆形边框 */
+    font-size: 16px;
+  }
+
+  .form-group input:focus {
+    border-color: #00B4D8; /* 聚焦时的边框颜色 */
+  }
 
 
 .form-control {
@@ -69,19 +122,25 @@
 
 .btn-submit {
     width: 100%;
-    padding: 10px;
-    border: none;
-    background-color: #007bff;
+    background-color: #10a37f; /* 按钮背景颜色 */
     color: white;
-    font-size: 16px;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 20px; /* 圆形边框 */
     cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.2s;
-}
+    transition: opacity 0.3s;
+  }
 
-.btn-submit:hover {
-    background-color: #0056b3;
-}
+  .btn-submit:hover {
+    opacity: 0.8;
+  }
+
+  .register-link a {
+    color: #00B4D8;
+    text-decoration: none;
+    font-size: 14px;
+  }
 
 /* 响应式设计 */
 @media (max-width: 600px) {
@@ -89,3 +148,25 @@
         padding: 15px;
     }
 }
+
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 半透明的黑色蒙层 */
+    z-index: 10; /* 设置一个较低的z-index */
+}
+
+.register-link {
+    position: relative; /* 增加相对定位 */
+    z-index: 20; /* 确保其z-index高于.video-overlay */
+    margin-top: 20px;
+    text-align: center; /* 如需居中 */
+    width: 100%; /* 如需在蒙层宽度内居中 */
+}
+
+
+

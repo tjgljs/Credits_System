@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { ethers } from 'ethers';
 import { Table } from 'antd';
 import MyContractABI from './abi.json';
+import { CONTRACT_ADDRESS } from './contractAddr';
 
 
 
@@ -158,7 +159,7 @@ const StudentCredits = () => {
             setCurrentAccount(accounts[0]);
             const provider = new ethers.BrowserProvider(window.ethereum);
             const signer = await provider.getSigner();
-            const contractAddress = '0x87AA2FeCF0d6F1a6F73a8E103C8A3A410914C9c1'; // Your Contract Address
+            const contractAddress = CONTRACT_ADDRESS; // Your Contract Address
             const contractABI =MyContractABI; // Your Contract ABI
             const newContract = new ethers.Contract(contractAddress, contractABI, signer);
             setContract(newContract);

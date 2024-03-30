@@ -12,28 +12,26 @@ function getItem(label, key, icon, children, type) {
   };
 }
 const items = [
-    getItem('Student', 'sub1', <AppstoreOutlined />, [
-      getItem('Credit details', '1'),
-      getItem('Approve', '2'),
-      getItem('CreditTransfer', '3'),
-      getItem('CreditTransferList', '4'),
+    getItem('学生', 'sub1', <AppstoreOutlined />, [
+      getItem('学分详情', '1'),
+      getItem('批准', '2'),
+      getItem('学分转移', '3'),
+      getItem('学分转移记录', '4'),
     ]),
-    getItem('Teacher', 'sub2', <AppstoreOutlined />, [
-      getItem('RecordCredit', '5'),
-      getItem('ModifyCredit', '6'),
+    getItem('老师', 'sub2', <AppstoreOutlined />, [
+      getItem('登记学分', '5'),
+      getItem('修改学分', '6'),
     //   getItem('Submenu', 'sub3', null, [getItem('Option 7', '7'), getItem('Option 8', '8')]),
     ]),
-    getItem('Mechanism', 'sub4', <AppstoreOutlined />, [
-      getItem('StudentCredit', '9'),
-      getItem('Option 10', '10'),
-      getItem('Option 11', '11'),
-      getItem('Option 12', '12'),
+    getItem('第三方机构', 'sub4', <AppstoreOutlined />, [
+      getItem('查询学生学分详情', '9'),
     ]),
-    getItem('Admin', 'sub5', <AppstoreOutlined />, [
-        getItem('AddTeacher', '13'),
-        getItem('RemoveTeacher ', '14'),
-        getItem('CancelCredit', '15'),
-        getItem('AllrequestCreditTransfer', '16'),
+    getItem('管理员', 'sub5', <AppstoreOutlined />, [
+        getItem('添加老师', '13'),
+        getItem('移除老师 ', '14'),
+        getItem('撤销学分', '15'),
+        getItem('学生转移学分请求', '16'),
+        getItem('顶级管理员', 'sub6', null, [getItem('添加管理员', '17'), getItem('移除管理员', '18')]),
       ]),
   ];
 
@@ -80,9 +78,16 @@ function MenuLeft() {
     if(e.key==='16'){
         navigate('all-request-credit-transfer')
     }
+    if(e.key==='17'){
+      navigate('add-admin')
+    }
+    if(e.key==='18'){
+      navigate('remove-admin')
+    }
   };
   return (
     <>
+    
       <Switch
         checked={theme === 'dark'}
         onChange={changeTheme}
@@ -102,6 +107,7 @@ function MenuLeft() {
         mode="inline"
         items={items}
       />
+      
     </>
   );
 };

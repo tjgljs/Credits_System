@@ -919,7 +919,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"credits.sol": "Creditcertification"
+			"Credits_contract/credits.sol": "Creditcertification"
 		},
 		"evmVersion": "byzantium",
 		"libraries": {},
@@ -933,7 +933,7 @@
 		"remappings": []
 	},
 	"sources": {
-		"credits.sol": {
+		"Credits_contract/credits.sol": {
 			"keccak256": "0x53f6018c11c60c7b6986ae323d81c2772feb9818159cfa48fa5aead3f188fe44",
 			"license": "MIT",
 			"urls": [

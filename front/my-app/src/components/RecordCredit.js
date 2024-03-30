@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import { Button, Form, Input, Space ,message} from 'antd';
 import MyContractABI from './abi.json';
+import { CONTRACT_ADDRESS } from './contractAddr';
 
 const RecordCredit = () => {
     const [contract, setContract] = useState(null);
@@ -38,7 +39,7 @@ const RecordCredit = () => {
         try {
             const provider = new ethers.BrowserProvider(window.ethereum);
             const signer = await provider.getSigner();
-            const contractAddress = '0xDD9a2C311d1B3C7bb33Dab080F0eF22506E66EbD'; // Your Contract Address
+            const contractAddress = CONTRACT_ADDRESS; // Your Contract Address
             const contractABI = MyContractABI; // Your Contract ABI
             const newContract = new ethers.Contract(contractAddress, contractABI, signer);
             setContract(newContract);

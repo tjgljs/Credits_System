@@ -55,6 +55,7 @@ func AddAdmin(c *gin.Context) {
 
 	// 更新用户为管理员
 	result = models.DB.Model(&user).Update("is_admin", 1)
+	fmt.Printf("result: %v\n", result)
 
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{

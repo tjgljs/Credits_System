@@ -3,7 +3,8 @@ import '../Register.css'; // 引入样式文件
 import { Link , useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import qs from 'qs'; // 引入 qs 库
-import { Button, message, Popconfirm  } from 'antd';
+import { Button, message } from 'antd';
+import myVideo from './v.mp4';
 
 function Register() {
     const [messageApi, contextHolder] = message.useMessage();
@@ -104,7 +105,18 @@ function Register() {
 
     return (
         <div className="register-container">
-            <form onSubmit={handleSubmit}>
+            <div className="video-container">
+                <video autoPlay muted loop id="myVideo">
+                    <source src={myVideo} type="video/mp4" />
+                    Your browser does not support HTML5 video.
+                </video>
+                <div className="video-overlay">
+                    <div className="overlay-text">
+                    Credit certification system based on blockchain
+                    </div>
+                </div>
+            </div>
+            <form onSubmit={handleSubmit} className="register-form">
             <div className="form-group">
                     <input
                         type="text"
@@ -181,11 +193,14 @@ function Register() {
                     </label>
             </div>
                 <button type="submit" className="btn-submit">注册</button>
+                <div className="login-link">
+            <Link to="/">已有账号？登录</Link>
+            </div>
             </form>
 
             {registerSuccess && <p>注册成功！</p>} {/* 注册成功时显示提示 */}
-            <Link to="/">已有账号？登录</Link>
 
+           
             {contextHolder}
 
             

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-
-
+import '../Navbar.css';
+import logoImage from './logo1.png'; 
 import { Button, Popover } from 'antd';
 
 function Navbar() {
@@ -41,11 +41,18 @@ function Navbar() {
 
 
     return (
-        <div style={{ position: 'absolute', top: 0, right: 0, padding: '10px' }}>
+        <div  className="navbar-container" >
+            <img src={logoImage} alt="Logo" className="navbar-logo" />
+            <div>
             <Popover content={popoverContent()} title="Address">
-                <Button type="primary">Wallet Address</Button>
+                <Button className="pink-button">Wallet Address</Button>
+                {/* 新添加的按钮 */}
+            
             </Popover>
-         </div>
+            </div>
+
+            
+        </div>
     );
 }
 

@@ -3,6 +3,8 @@ import { Link,useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import qs from 'qs'; // 引入 qs 库
 import '../Login.css';
+import myVideo from './v.mp4';
+
 
 function Login() {
     const [username, setUsername] = useState('');
@@ -57,7 +59,17 @@ function Login() {
   };
 
     return (
-        <div className="login-container">
+        <div className="login-container" >
+           
+            <div className="video-container">
+            <div className="video-overlay">
+            <div className="overlay-text1">Credit certification system based on blockchain</div>
+            </div>
+                <video autoPlay muted loop id="myVideo">
+                <source src={myVideo} type="video/mp4" />
+                    Your browser does not support HTML5 video.
+                </video>
+            </div>
             <form onSubmit={handleSubmit} className="login-form">
                 <div className="form-group">
                     <input
@@ -65,6 +77,7 @@ function Login() {
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         placeholder="用户名"
+                        className="form-control"
                     />
                 </div>
                 <div className="form-group">
@@ -73,15 +86,17 @@ function Login() {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="密码"
+                        className="form-control"
                     />
                 </div>
                 <button type="submit" className="btn-submit">登录</button>
-
-            </form>
-            <div className="register-link">
+                <div className="register-link">
               <Link to="/register">没有账号？注册</Link>
             </div>
-            {/* 其他内容 */}
+
+            </form>
+            
+            
             
 
         </div>

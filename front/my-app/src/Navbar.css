@@ -1,0 +1,89 @@
+.pink-button {
+    background-color: deepPink; /* 粉红色背景 */
+    color: white; /* 白色文字 */
+    border: none; /* 无边框 */
+    padding: 25px 15px; /* 增加内边距使按钮更宽 */
+    border-radius: 10px; /* 边框半径使角更圆 */
+    font-size: 16px; /* 字体大小 */
+    font-weight: bold; /* 加粗字体 */
+    display: inline-block; /* 使按钮作为内联块元素 */
+    text-align: center; /* 文字居中 */
+    line-height: 0.2; /* 调整行高 */
+    transition: background-color 0.3s; /* 背景色过渡效果 */
+    margin-left: 5%;
+    margin-top: 0.6%;
+}
+
+.pink-button:hover {
+    background-color: Pink; /* 鼠标悬停时背景变深粉红色 */
+}
+
+.navbar-logo {
+    height: 55px;
+    margin-top: 0.6%;
+    margin-left: 5%;
+    border-radius: 5px;
+    transition: filter 0.3s ease-in-out; /* 平滑过渡亮度变化 */
+    filter: brightness(100%); /* 初始亮度设置为100% */
+    cursor: pointer; /* 更改光标以指示它是可点击的 */
+}
+
+.navbar-logo:hover {
+    filter: brightness(60%); /* 鼠标悬停时亮度变为90% */
+}
+
+
+.navbar-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1000; /* 如果需要，请调整以确保导航栏位于其他元素之上 */
+    background: black; /* 设置背景为黑色 */
+    display: flex;
+    justify-content: space-between; /* 这会将您的logo和按钮分开放置 */
+    align-items: center;
+    padding: 0.5rem 1rem; /* 在内容周围添加一些内边距 */
+}
+
+
+.navbar-button {
+    background-color: deepPink; /* 粉红色背景 */
+    color: white; /* 白色文字 */
+    border: none; /* 无边框 */
+    padding: 25px 15px; /* 增加内边距使按钮更宽 */
+    border-radius: 10px; /* 边框半径使角更圆 */
+    font-size: 16px; /* 字体大小 */
+    font-weight: bold; /* 加粗字体 */
+    display: inline-block; /* 使按钮作为内联块元素 */
+    text-align: center; /* 文字居中 */
+    line-height: 0.2; /* 调整行高 */
+    transition: background-color 0.3s; /* 背景色过渡效果 */
+    margin-left: 50%;
+    margin-top: 0.6%;
+}
+
+.navbar-button:hover {
+    background-color: Pink; /* 鼠标悬停时背景变深粉红色 */
+}
+
+.navbar-button1 {
+    background-color: deepPink; /* 粉红色背景 */
+    color: white; /* 白色文字 */
+    border: none; /* 无边框 */
+    padding: 25px 15px; /* 增加内边距使按钮更宽 */
+    border-radius: 10px; /* 边框半径使角更圆 */
+    font-size: 16px; /* 字体大小 */
+    font-weight: bold; /* 加粗字体 */
+    display: inline-block; /* 使按钮作为内联块元素 */
+    text-align: center; /* 文字居中 */
+    line-height: 0.2; /* 调整行高 */
+    transition: background-color 0.3s; /* 背景色过渡效果 */
+    margin-left: 5%;
+    margin-top: 0.6%;
+}
+
+.navbar-button1:hover {
+    background-color: Pink; /* 鼠标悬停时背景变深粉红色 */
+}
+

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { ethers } from 'ethers';
 import { Avatar, List, Space, message, Radio, Button } from 'antd';
 import MyContractABI from './abi.json';
+import { CONTRACT_ADDRESS } from './contractAddr';
 
 const AllrequestCreditTransfer = () => {
   const [transfers, setTransfers] = useState([]);
@@ -22,7 +23,7 @@ const AllrequestCreditTransfer = () => {
     try {
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
-      const contractAddress = '0x87AA2FeCF0d6F1a6F73a8E103C8A3A410914C9c1';
+      const contractAddress = CONTRACT_ADDRESS;
       const newContract = new ethers.Contract(contractAddress, MyContractABI, signer);
       setContract(newContract);
     } catch (error) {
@@ -59,7 +60,7 @@ const AllrequestCreditTransfer = () => {
   }, [contract]);
 
   useEffect(() => {
-    const intervalId = setInterval(fetchAllTransfers, 10000);
+    const intervalId = setInterval(fetchAllTransfers, 1000);
     return () => clearInterval(intervalId);
   }, [fetchAllTransfers]);
 

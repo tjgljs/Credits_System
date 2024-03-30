@@ -3,6 +3,7 @@ import { ethers } from 'ethers';
 import { Button, Form, Input, Space ,message} from 'antd';
 import MyContractABI from './abi.json';
 import axios from 'axios';
+import { CONTRACT_ADDRESS } from './contractAddr';
 
 const RemoveTeacher = () => {
     const [contract, setContract] = useState(null);
@@ -37,7 +38,7 @@ const RemoveTeacher = () => {
         try {
             const provider = new ethers.BrowserProvider(window.ethereum);
             const signer = await provider.getSigner();
-            const contractAddress = '0x57a414f61436d97dcb7297e90299dd3D1Dc0D8D8'; // Your Contract Address
+            const contractAddress = CONTRACT_ADDRESS; // Your Contract Address
             const contractABI =MyContractABI; // Your Contract ABI
             const newContract = new ethers.Contract(contractAddress, contractABI, signer);
             setContract(newContract);
