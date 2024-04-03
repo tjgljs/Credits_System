@@ -16,7 +16,7 @@ export const ContractProvider = ({ children }) => {
         try {
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
             setCurrentAccount(accounts[0]);
-            const provider = new ethers.BrowserProvider(window.ethereum);
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
             const signer = await provider.getSigner();
             const contractAddress = '0xAf44d766506E9CcA560e047a7F62D2e8Ac3F8Ff7'; // Your Contract Address
             const contractABI = [

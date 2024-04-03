@@ -35,7 +35,7 @@ const CreditTransfer = () => {
             return;
         }
         try {
-            const provider = new ethers.BrowserProvider(window.ethereum);
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
             const signer = await provider.getSigner();
             const contractAddress = CONTRACT_ADDRESS; // Your Contract Address
             const contractABI =MyContractABI

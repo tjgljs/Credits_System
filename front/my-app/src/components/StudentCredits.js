@@ -157,7 +157,7 @@ const StudentCredits = () => {
         try {
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
             setCurrentAccount(accounts[0]);
-            const provider = new ethers.BrowserProvider(window.ethereum);
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
             const signer = await provider.getSigner();
             const contractAddress = CONTRACT_ADDRESS; // Your Contract Address
             const contractABI =MyContractABI; // Your Contract ABI

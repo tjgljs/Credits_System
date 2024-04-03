@@ -13,7 +13,7 @@ var DB = Init()
 var RDB = InitRedisDB()
 
 func Init() *gorm.DB {
-	dsn := "root:123456789@tcp(127.0.0.1:3306)/credits?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:123456789@tcp(127.0.0.1:3306)/credit?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		fmt.Printf("err: %v\n", err)

@@ -36,7 +36,7 @@ const items = [
   ];
 
 function MenuLeft() {
-    const [theme, setTheme] = useState('dark');
+    const [theme, setTheme] = useState('Light');
     const [current, setCurrent] = useState('1');
     const changeTheme = (value) => {
         setTheme(value ? 'dark' : 'light');
@@ -86,29 +86,25 @@ function MenuLeft() {
     }
   };
   return (
-    <>
-    
-      <Switch
-        checked={theme === 'dark'}
-        onChange={changeTheme}
-        checkedChildren="Dark"
-        unCheckedChildren="Light"
-      />
-      <br />
-      <br />
-      <Menu
-        theme={theme}
-        onClick={onClick}
-        style={{
-          width: 256,
-        }}
-        defaultOpenKeys={['sub1']}
-        selectedKeys={[current]}
-        mode="inline"
-        items={items}
-      />
-      
-    </>
-  );
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}> {/* 设置容器高度为视口高度 */}
+        <div style={{ marginBottom: 16, textAlign: 'right', padding: '16px' }}> {/* 切换按钮的容器 */}
+            {/* <Switch
+                checked={theme === 'dark'}
+                onChange={changeTheme}
+                checkedChildren="Dark"
+                unCheckedChildren="Light"
+            /> */}
+        </div>
+        <Menu
+            theme={theme}
+            onClick={onClick}
+            defaultOpenKeys={['sub1']}
+            selectedKeys={[current]}
+            mode="inline"
+            items={items}
+            style={{ flex: 1, overflow: 'auto' }} // 设置菜单填充剩余空间，自动添加滚动条
+        />
+    </div>
+);
 };
 export default MenuLeft;
