@@ -11,7 +11,7 @@ const LayoutWithMenu = ({ children }) => {
 
     return (
         <div style={{ paddingTop: '22px', display: 'flex', height: 'calc(100vh - 22px)' }}> {/* 为 Navbar 预留空间 */}
-        {showMenuLeft && <MenuLeft style={{ width: '256px', flexShrink: 0 }} />}
+        {showMenuLeft && <MenuLeft style={{ width: '256px', flexShrink: 0, marginTop: '20px' }} />}
         <div style={{ flex: 1 }}>
             {children}
         </div>

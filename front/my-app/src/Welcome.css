@@ -1,0 +1,115 @@
+    .welcome-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* 水平居中 */
+        justify-content: flex-start;/* 垂直居中 */
+        padding: 50px; /* 调整间距 */
+        background: url('./components/beijing.png') no-repeat center center;
+        background-size: cover;
+        color: #fff; /* 根据背景调整文字颜色 */
+        margin-top: 10px; /* 这应该是Navbar的高度，确保背景图片从Navbar下方开始 */
+        height: calc(100vh - 90px);
+        padding-top: 30px; /* 减少顶部内边距的值 */
+    }
+    
+    .welcome-title {
+        font-size: 48px; /* 调整字号大小 */
+        margin-bottom: 20px; /* 添加适当的间距 */
+        margin-top: -20px; /* 根据需要调整数值 */
+    }
+    
+    .welcome-content {
+        max-width: 600px; /* 或根据设计调整最大宽度 */
+        text-align: center;
+        margin-top: -20px; /* 根据需要调整数值 */
+        line-height: 1.8; /* 这里的值可以根据您的需求进行调整 */
+    }
+    
+    .welcome-actions {
+        margin-top: 30px;
+    }
+    
+    .welcome-btn {
+        background-color: transparent; /* 示例按钮颜色 */
+        color: #fff;
+        border: none;
+        padding: 15px 30px; /* 可以根据需要调整 */
+        border-radius: 30px; /* 圆润按钮的关键点，可以根据需要调整 */
+        font-size: 16px;
+        cursor: pointer;
+        outline: none;
+        transition: background-color 0.3s;
+        text-align: center;
+    }
+    
+    .welcome-btn:hover {
+        background-color: #0056a3; /* 鼠标悬停时的按钮颜色 */
+    }
+
+    /* 如果使用了<a>标签方法，需要添加以下样式 */
+    .welcome-btn-link {
+        text-decoration: none; /* 去掉下划线 */
+    }
+
+
+    /* Welcome.css */
+    .qr-code-container {
+        display: flex;
+        justify-content: center; /* 居中显示二维码 */
+        align-items: center;
+        margin-top: 20px; /* 在二维码上方留出空间 */
+        padding: 10px; /* 在二维码周围添加一些内边距 */
+        background-color: white; /* 背景颜色 */
+        border-radius: 10px; /* 圆角边框 */
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* 添加阴影 */
+    }
+    
+    .qr-code-container img {
+        max-width: 200px; /* 限制二维码图片的最大宽度 */
+        height: auto; /* 自动调整高度以保持图片比例 */
+    }
+
+    /* Welcome.css */
+    .centered-text {
+        text-align: center;
+    }
+
+    /* Welcome.css */
+    .bold-text {
+        font-weight: bold; /* 设置字体加粗 */
+    }
+
+    /* Welcome.css */
+    .modal {
+        display: flex;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+        z-index: 2;
+    }
+    
+    .modal-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    
+    .hidden {
+        display: none;
+    }
+    /* Welcome.css */
+        .modal-content img {
+            max-width: 300px; /* 或根据需要调整 */
+            max-height: 400px; /* 或根据需要调整 */
+            padding: 10px; /* 添加内边距 */
+        }
+    
+    
+    
+    
+    

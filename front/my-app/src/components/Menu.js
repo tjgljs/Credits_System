@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AppstoreOutlined } from '@ant-design/icons';
-import { Menu, Switch } from 'antd';
+import { Menu } from 'antd';
 import { useNavigate } from 'react-router-dom';
 function getItem(label, key, icon, children, type) {
   return {
@@ -12,6 +12,9 @@ function getItem(label, key, icon, children, type) {
   };
 }
 const items = [
+  getItem('首页', 'sub7', <AppstoreOutlined />, [
+    getItem('系统简介', '20'),
+  ]),
     getItem('学生', 'sub1', <AppstoreOutlined />, [
       getItem('学分详情', '1'),
       getItem('批准', '2'),
@@ -25,22 +28,24 @@ const items = [
     ]),
     getItem('第三方机构', 'sub4', <AppstoreOutlined />, [
       getItem('查询学生学分详情', '9'),
+      getItem('请求查询学生学分','19')
     ]),
     getItem('管理员', 'sub5', <AppstoreOutlined />, [
         getItem('添加老师', '13'),
         getItem('移除老师 ', '14'),
         getItem('撤销学分', '15'),
         getItem('学生转移学分请求', '16'),
+        
         getItem('顶级管理员', 'sub6', null, [getItem('添加管理员', '17'), getItem('移除管理员', '18')]),
       ]),
   ];
 
 function MenuLeft() {
-    const [theme, setTheme] = useState('Light');
+    const [theme, ] = useState('Light');
     const [current, setCurrent] = useState('1');
-    const changeTheme = (value) => {
-        setTheme(value ? 'dark' : 'light');
-  };
+  //   const changeTheme = (value) => {
+  //       setTheme(value ? 'dark' : 'light');
+  // };
     const navigate = useNavigate();
     const onClick = (e) => {
     console.log('click ', e);
@@ -84,17 +89,17 @@ function MenuLeft() {
     if(e.key==='18'){
       navigate('remove-admin')
     }
+    if(e.key==='19'){
+      navigate('request-student')
+    }
+    if(e.key==="20"){
+      navigate('welcomePage')
+    }
+    
   };
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}> {/* 设置容器高度为视口高度 */}
-        <div style={{ marginBottom: 16, textAlign: 'right', padding: '16px' }}> {/* 切换按钮的容器 */}
-            {/* <Switch
-                checked={theme === 'dark'}
-                onChange={changeTheme}
-                checkedChildren="Dark"
-                unCheckedChildren="Light"
-            /> */}
-        </div>
+        
         <Menu
             theme={theme}
             onClick={onClick}

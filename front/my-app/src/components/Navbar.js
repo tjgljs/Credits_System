@@ -50,8 +50,6 @@ function Navbar() {
             
             </Popover>
             </div>
-
-            
         </div>
     );
 }

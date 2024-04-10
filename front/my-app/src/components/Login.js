@@ -37,7 +37,7 @@ function Login() {
             localStorage.setItem('is_teacher',response.data.data.is_teacher)
             localStorage.setItem('is_student',response.data.data.is_student)
 
-            navigate('/homePage'); 
+            navigate('/welcomePage'); 
 
 
 

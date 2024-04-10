@@ -11,7 +11,7 @@ import Mechanism from './components/Mechanism';
 import Navbar from './components/Navbar'; // 引入顶部导航栏组件
 import LayoutWithMenu from './components/LayoutWithMenu';
 import HomePage from './components/HomePage';
-import Approve from './components/Approve';
+import Approve from './components/Approve2';
 import CreditTransfer from './components/CreditTransfer';
 import CreditTransferList from './components/CreditTransfersList';
 import ModifyCredit from './components/ModifyCredit';
@@ -22,6 +22,9 @@ import Cancel from './components/Cancel';
 import AllrequestCreditTransfer from './components/AllrequestCreditTransfer';
 import AddAdmin from './components/AddAdmin';
 import RemoveAdmin from './components/RemoveAdmin';
+import RequsetStudent from './components/RequestStudent';
+import WelcomePage from './components/WelcomePage';
+
 
 function App() {
     
@@ -33,6 +36,8 @@ function App() {
             <LayoutWithMenu>
             <Routes>
                 <Route path="/homePage" element={<HomePage />} /> 
+
+                <Route path="/welcomePage" element={<WelcomePage />} /> 
                 
                 <Route path="/" element={<Login />} />
 
@@ -77,6 +82,11 @@ function App() {
                     <ProtectedRoute component={GetStudentCreditByMechanism} role="mechanism" />
                 } />
 
+                <Route path="/request-student" element={
+                    // eslint-disable-next-line
+                    <ProtectedRoute component={RequsetStudent} role="mechanism" />
+                } />
+
                 <Route path="/add-teacher" element={
                     // eslint-disable-next-line
                     <ProtectedRoute component={AddTeacher} role="admin" />
@@ -96,6 +106,7 @@ function App() {
                     // eslint-disable-next-line
                     <ProtectedRoute component={AllrequestCreditTransfer} role="admin" />
                 } />
+                
 
                 <Route path="/add-admin" element={
                     // eslint-disable-next-line

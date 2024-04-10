@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import '../Register.css'; // 引入样式文件
 import { Link , useNavigate} from 'react-router-dom';
 import axios from 'axios';
@@ -6,10 +6,14 @@ import qs from 'qs'; // 引入 qs 库
 import { Button, message } from 'antd';
 import myVideo from './v.mp4';
 
+
 function Register() {
     const [messageApi, contextHolder] = message.useMessage();
-
     
+
+  
+
+
 
     const handleSendCode = async () => {
         try {
@@ -85,6 +89,8 @@ function Register() {
             if(response.data.code===200){
                 alert(`恭喜你 注册成功！请记住你的私钥：${response.data.data.privateKey}`)
                 setRegisterSuccess(true)
+                
+
                 history('/')
             }else{
                 alert(`注册失败：${response.data.msg}`)

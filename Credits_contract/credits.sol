@@ -88,6 +88,15 @@ contract Creditcertification is Ownable{
         uint256 createTime;//课程创建时间
     }
 
+    //第三方发起查询请求
+    struct Request{
+        address mechanism;
+        uint256 expectNum; 
+    }
+
+    //第三方=》具体请求详情
+    mapping (address =>Request[])public requestOfMechanism;
+
     //课程id=>课程info
     mapping (uint256=>CourserInfo)public courserInfo;
 
@@ -101,6 +110,9 @@ contract Creditcertification is Ownable{
 
     mapping(uint256 => bool) public courseExists;
 
+    //记录白名单
+    mapping(address =>bool)public isWhiteList;
+
     uint256[]public  courseLists;
 
     //允许第三方查询次数
@@ -111,14 +123,22 @@ contract Creditcertification is Ownable{
 
     address[] public studentLists;
 
+    
+
 
     modifier onlyTeacher() {
         require(teachers[msg.sender], "Not a teacher");
         _;
     }
 
+    //注册时给用户钱包添加白名单
+    function setWhiteList(address userAddr)external {
+        isWhiteList[userAddr]=true;
+    }
+
     //添加课程
     function addCourse(uint256 courseId,uint256 credits,string memory courseName)external onlyAdmin{
+       
         require(!courseExists[courseId],"Course already exists");
         courseExists[courseId]=true;
         courseLists.push(courseId);
@@ -132,12 +152,14 @@ contract Creditcertification is Ownable{
 
     //查询课程详情
     function getCourseInfo(uint256 courseId)external returns(CourserInfo memory){
+       
         require(courseExists[courseId]=true,"Course not exists");
         return courserInfo[courseId];
     }
     
     //添加老师
     function addTeacher(address teacher)external onlyAdmin{
+       
         require(teacher!=address(0),"Invalid address");
 
         teachers[teacher]=true;
@@ -145,6 +167,7 @@ contract Creditcertification is Ownable{
 
     //移除老师
     function removeTeacher(address teacher)external onlyAdmin{
+       
         require(teacher!=address(0),"Invalid address");
         require(teachers[teacher]==true,"address are not a teacher");
         teachers[teacher]=false;
@@ -152,6 +175,8 @@ contract Creditcertification is Ownable{
 
     //老师上传学分认证信息
     function recordCredit(address student,uint256 courserId,uint256 score,string memory issuingInstitution)public onlyTeacher{
+       
+
         require(student!=address(0),"Invalid address");
 
         require(courserId>=0,"Invalid course ID");
@@ -174,12 +199,18 @@ contract Creditcertification is Ownable{
 
     //获取所有课程id
     function getAllCourseID()external view returns(uint[] memory){
+
+     
+
         return courseLists;
     }
 
     //学生查询自己的学分详情
     function getCreditsOfStudent() external view returns(Credit[] memory creditList) {
+        
+
         uint length = studentCourseIds[msg.sender].length;
+
         creditList = new Credit[](length);
 
         for(uint i = 0; i < length; i++) {
@@ -194,31 +225,69 @@ contract Creditcertification is Ownable{
 
     //学生授权第三方允许查询自己学分详情
     function approve(address spender,uint256 num )external returns(bool){
+       
         allowance[msg.sender][spender]=num;
+        
         return true;
     }
 
+// 事件用于记录学生的学分详情
+event LogCreditDetails(
+    address indexed student,
+    uint256 courseId,
+    uint256 credits,
+    uint256 score,
+    uint256 issueDate,//发布时间
+    bool isModified, //标记是否被修改
+    uint256 modifyNum,//修改次数
+    bool isRevoked,// 新增字段，表示学分是否被撤销
+    string issuingInstitution, // 授予学分的教育机构
+    bool isTransferred,//是否被转出
+    string targetInstitution // 学分转移的目标机构
+   
+);
+
+event Log(Credit[] indexed credit);
     //第三方查看某个学生学分详情
-    function getStudentCreditByMechanism(address student)external  returns(Credit[]memory creditList){
+    function getStudentCreditByMechanism(address student)external  {
+        
         require(allowance[student][msg.sender]>0,"you do not be allowed");
+        allowance[student][msg.sender]--;
         uint length = studentCourseIds[student].length;
-        creditList = new Credit[](length);
+
+        Credit[]memory creditList = new Credit[](length);
 
         for(uint i = 0; i < length; i++) {
 
             uint courseId = studentCourseIds[student][i];
 
             creditList[i] = studentCredits[student][courseId];
+            
+            emit LogCreditDetails(student, creditList[i].courserId, creditList[i].credits, creditList[i].score,creditList[i].issueDate,creditList[i].isModified,creditList[i].modifyNum,creditList[i].isRevoked,creditList[i]. issuingInstitution,creditList[i].isTransferred,creditList[i].targetInstitution);
         }
 
-        allowance[student][msg.sender]-=1;
 
-        return creditList;
+    }
 
+    //第三方申请查看某个学生学详情
+    function Requests(address stuAddr,uint256 num)external {
+       
+        
+        requestOfMechanism[stuAddr].push(Request({
+            mechanism:msg.sender,
+            expectNum:num
+        }));
+    }
+
+    //获取所有的appreove的list
+    function GetAllApproveList()external view returns(Request[]memory){
+        return requestOfMechanism[msg.sender];
     }
 
     // 用于老师修改学分的函数
     function modifyCredit(address student, uint256 courseId,  uint256 newScore) external  onlyTeacher {
+       
+
         require(studentCredits[student][courseId].issueDate != 0, "Credit does not exist");
 
         require(student!=address(0),"Invalid address");
@@ -242,6 +311,7 @@ contract Creditcertification is Ownable{
 
     //学分撤销 必须为管理员才能call
     function Cancel(address student,uint256 courseId)external  onlyAdmin{
+        
         require(studentCredits[student][courseId].issueDate != 0, "Credit does not exist");
         require(courseId>=0,"Invalid course ID");
         require(!studentCredits[student][courseId].isRevoked, "Credit already revoked");
@@ -250,11 +320,13 @@ contract Creditcertification is Ownable{
 
      // 计算特定学生的特定课程 ID 出现的次数
     function countCourseIdOccurrences(address student) public view returns (uint256) {
+       
         return creditTransferRequests[student].length;
     }
 
     //学生发起学分转移请求
     function requestCreditTransfer(uint256 courseId, string memory targetInstitution) external {
+      
         require(studentCredits[msg.sender][courseId].issueDate != 0, "Credit does not exist");
         require(!studentCredits[msg.sender][courseId].isRevoked, "Credit already revoked");
         uint256 num=countCourseIdOccurrences(msg.sender);
@@ -284,7 +356,7 @@ contract Creditcertification is Ownable{
 
     //管理员或授权教育机构审批学分转移请求
     function approveCreditTransfer(address student, uint index) external onlyAdmin {
-
+        
         require(!creditTransferRequests[student][index].isApproved, "Transfer already approved");
 
         creditTransferRequests[student][index].isApproved = true;
@@ -293,6 +365,7 @@ contract Creditcertification is Ownable{
 
     //执行已批准的学分转移
     function executeCreditTransfer(address student, uint index) external onlyAdmin{
+       
         require(creditTransferRequests[student][index].isApproved, "Transfer not approved");
 
         require(!creditTransferRequests[student][index].isExecuted, "Transfer already executed");
@@ -306,6 +379,7 @@ contract Creditcertification is Ownable{
 
     //查询转移学分记录
     function getCreditTransfersOfStudent(address student) external  view returns (CreditTransfer[] memory) {
+       
 
         require(student != address(0), "Invalid student address");
 
@@ -314,6 +388,8 @@ contract Creditcertification is Ownable{
 
  // 查询所有提交的学分转移记录
     function getAllrequestCreditTransfer() external view returns (CreditTransfer[] memory) {
+       
+
         uint totalRequests = 0;
 
         // 首先，计算所有请求的总数

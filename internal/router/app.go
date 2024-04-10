@@ -22,6 +22,7 @@ func Router() *gin.Engine {
 	r.POST("/login", service.Login)
 	r.POST("/send-code", service.SendCode)
 	r.POST("/register", service.Register)
+	r.GET("/all-user-details", service.GetAllUsers)
 
 	// 管理员私有方法
 	authAdmin := r.Group("/admin", middlewares.AuthAdminCheck())

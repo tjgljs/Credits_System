@@ -23,7 +23,7 @@ func Init() *gorm.DB {
 
 func InitRedisDB() *redis.Client {
 	return redis.NewClient(&redis.Options{
-		Addr:     "192.168.1.54:6379",
+		Addr:     "192.168.110.239:6379",
 		Password: "", // no password set
 		DB:       0,  // use default DB
 	})

@@ -202,7 +202,13 @@
 			}
 		],
 		"name": "getStudentCreditByMechanism",
-		"outputs": [
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
 			{
 				"components": [
 					{
@@ -256,13 +262,87 @@
 						"type": "string"
 					}
 				],
+				"indexed": true,
 				"internalType": "struct Creditcertification.Credit[]",
-				"name": "creditList",
+				"name": "credit",
 				"type": "tuple[]"
 			}
 		],
-		"stateMutability": "nonpayable",
-		"type": "function"
+		"name": "Log",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "student",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "courseId",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "credits",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "score",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "issueDate",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "bool",
+				"name": "isModified",
+				"type": "bool"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "modifyNum",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "bool",
+				"name": "isRevoked",
+				"type": "bool"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "issuingInstitution",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "bool",
+				"name": "isTransferred",
+				"type": "bool"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "targetInstitution",
+				"type": "string"
+			}
+		],
+		"name": "LogCreditDetails",
+		"type": "event"
 	},
 	{
 		"inputs": [
@@ -381,6 +461,37 @@
 			}
 		],
 		"name": "requestCreditTransfer",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "stuAddr",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "num",
+				"type": "uint256"
+			}
+		],
+		"name": "Requests",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "userAddr",
+				"type": "address"
+			}
+		],
+		"name": "setWhiteList",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -557,6 +668,31 @@
 				"internalType": "uint256",
 				"name": "index",
 				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "GetAllApproveList",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "address",
+						"name": "mechanism",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "expectNum",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct Creditcertification.Request[]",
+				"name": "",
+				"type": "tuple[]"
 			}
 		],
 		"stateMutability": "view",
@@ -756,6 +892,25 @@
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "isWhiteList",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "owner",
 		"outputs": [
@@ -763,6 +918,35 @@
 				"internalType": "address",
 				"name": "",
 				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "requestOfMechanism",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "mechanism",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "expectNum",
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",

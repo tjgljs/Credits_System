@@ -257,6 +257,23 @@ func GetUserDetail(c *gin.Context) {
 	})
 }
 
+func GetAllUsers(c *gin.Context) {
+	var users []models.UserBasic
+	err := models.DB.Select("id, name, phone, mail, is_teacher, is_admin, is_top, is_mechanism, is_student,public_key").
+		Find(&users).Error
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"code": -1,
+			"msg":  "Failed to fetch users",
+		})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"code": 200,
+		"data": users,
+	})
+}
+
 func IsUser(c *gin.Context) {
 	publicKey := c.Query("publicKey")
 	if publicKey == "" {
@@ -504,6 +521,7 @@ func Register(c *gin.Context) {
 		"data": map[string]interface{}{
 			"token":      token,
 			"privateKey": privateKey,
+			"publicKey":  walletAddress,
 		},
 		"msg": "注册成功",
 	})
