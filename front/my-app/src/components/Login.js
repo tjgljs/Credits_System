@@ -37,10 +37,8 @@ function Login() {
             localStorage.setItem('is_teacher',response.data.data.is_teacher)
             localStorage.setItem('is_student',response.data.data.is_student)
 
-            navigate('/welcomePage'); 
-
-
-
+            navigate('/one'); 
+            
 
           } else {
               console.log('登录失败:', response.data);

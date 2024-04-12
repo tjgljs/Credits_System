@@ -12,8 +12,8 @@ function getItem(label, key, icon, children, type) {
   };
 }
 const items = [
-  getItem('首页', 'sub7', <AppstoreOutlined />, [
-    getItem('系统简介', '20'),
+  getItem('介绍', 'sub7', <AppstoreOutlined />, [
+    getItem('开始', '20'),
   ]),
     getItem('学生', 'sub1', <AppstoreOutlined />, [
       getItem('学分详情', '1'),
@@ -43,9 +43,7 @@ const items = [
 function MenuLeft() {
     const [theme, ] = useState('Light');
     const [current, setCurrent] = useState('1');
-  //   const changeTheme = (value) => {
-  //       setTheme(value ? 'dark' : 'light');
-  // };
+  
     const navigate = useNavigate();
     const onClick = (e) => {
     console.log('click ', e);
@@ -93,7 +91,7 @@ function MenuLeft() {
       navigate('request-student')
     }
     if(e.key==="20"){
-      navigate('welcomePage')
+      navigate('/one')
     }
     
   };
@@ -103,11 +101,11 @@ function MenuLeft() {
         <Menu
             theme={theme}
             onClick={onClick}
-            defaultOpenKeys={['sub1']}
+            defaultOpenKeys={[]}
             selectedKeys={[current]}
             mode="inline"
             items={items}
-            style={{ flex: 1, overflow: 'auto' }} // 设置菜单填充剩余空间，自动添加滚动条
+            style={{ flex: 1, overflow: 'auto',borderRight: '1px solid #293541' }} // 设置菜单填充剩余空间，自动添加滚动条
         />
     </div>
 );

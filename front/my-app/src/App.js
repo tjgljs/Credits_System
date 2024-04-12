@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import Login from './components/Login';
 import Register from './components/Register';
 import StudentCredits from './components/StudentCredits';
@@ -24,6 +24,7 @@ import AddAdmin from './components/AddAdmin';
 import RemoveAdmin from './components/RemoveAdmin';
 import RequsetStudent from './components/RequestStudent';
 import WelcomePage from './components/WelcomePage';
+import One from './components/one';
 
 
 function App() {
@@ -37,9 +38,11 @@ function App() {
             <Routes>
                 <Route path="/homePage" element={<HomePage />} /> 
 
-                <Route path="/welcomePage" element={<WelcomePage />} /> 
+                <Route path="/" element={<RootRedirect />} /> 
+
+                <Route path='/one' element={<One/>}/>
                 
-                <Route path="/" element={<Login />} />
+                <Route path="/login" element={<Login />} />
 
                 <Route path="/register" element={<Register />} />
 
@@ -131,6 +134,19 @@ function App() {
             </div>
         </Router>
     );
+}
+
+
+function RootRedirect() {
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (localStorage.getItem('token')) {
+            navigate('/one'); // 如果token存在，重定向到/one
+            window.location.reload(); // 强制页面刷新
+        }
+    }, [navigate]);
+
+    return <WelcomePage />; // 默认显示WelcomePage组件
 }
 
 export default App;

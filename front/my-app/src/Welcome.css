@@ -4,7 +4,7 @@
         align-items: center; /* 水平居中 */
         justify-content: flex-start;/* 垂直居中 */
         padding: 50px; /* 调整间距 */
-        background: url('./components/beijing.png') no-repeat center center;
+        /* background: url('./components/beijing.png') no-repeat center center; */
         background-size: cover;
         color: #fff; /* 根据背景调整文字颜色 */
         margin-top: 10px; /* 这应该是Navbar的高度，确保背景图片从Navbar下方开始 */
@@ -12,17 +12,24 @@
         padding-top: 30px; /* 减少顶部内边距的值 */
     }
     
+    
     .welcome-title {
-        font-size: 48px; /* 调整字号大小 */
-        margin-bottom: 20px; /* 添加适当的间距 */
-        margin-top: -20px; /* 根据需要调整数值 */
+        -webkit-text-stroke: 2px #285c6c; /* 设置文字描边的宽度和颜色 */
+        color: transparent; /* 使文字颜色透明，只留下描边 */
+        font-size: 60px;
+        font-weight: bold;
+        text-align: center;
+        margin-top: -40px; /* 负值向上推动 */
+       
+        
     }
     
     .welcome-content {
         max-width: 600px; /* 或根据设计调整最大宽度 */
         text-align: center;
         margin-top: -20px; /* 根据需要调整数值 */
-        line-height: 1.8; /* 这里的值可以根据您的需求进行调整 */
+        line-height: 2; /* 这里的值可以根据您的需求进行调整 */
+        color: #47515a;
     }
     
     .welcome-actions {
@@ -30,20 +37,21 @@
     }
     
     .welcome-btn {
-        background-color: transparent; /* 示例按钮颜色 */
-        color: #fff;
+        background-color: #7bdcb5; /* 示例按钮颜色 */
+        color: #285c6c;
         border: none;
         padding: 15px 30px; /* 可以根据需要调整 */
-        border-radius: 30px; /* 圆润按钮的关键点，可以根据需要调整 */
+        border-radius: 15px; /* 圆润按钮的关键点，可以根据需要调整 */
         font-size: 16px;
         cursor: pointer;
         outline: none;
         transition: background-color 0.3s;
         text-align: center;
+        margin-right: 15px; /* 添加右边距 */
     }
     
     .welcome-btn:hover {
-        background-color: #0056a3; /* 鼠标悬停时的按钮颜色 */
+        background-color: white; /* 鼠标悬停时的按钮颜色 */
     }
 
     /* 如果使用了<a>标签方法，需要添加以下样式 */
@@ -76,7 +84,20 @@
 
     /* Welcome.css */
     .bold-text {
-        font-weight: bold; /* 设置字体加粗 */
+        -webkit-text-stroke: 1px black; /* 设置文字描边的宽度和颜色 */
+        color: transparent; /* 使文字颜色透明，只留下描边 */
+        font-size: 30px;
+        font-weight: bold;
+        text-align: center;
+        margin-top: -40px; /* 负值向上推动 */
+    }
+    .p-text {
+        -webkit-text-stroke: 1px #47515a; /* 设置文字描边的宽度和颜色 */
+        color: transparent; /* 使文字颜色透明，只留下描边 */
+        font-size: 15px;
+        
+        text-align: center;
+        
     }
 
     /* Welcome.css */
@@ -107,7 +128,16 @@
             max-width: 300px; /* 或根据需要调整 */
             max-height: 400px; /* 或根据需要调整 */
             padding: 10px; /* 添加内边距 */
-        }
+    }
+
+    .hollow-text {
+        -webkit-text-stroke: 1px black; /* 设置文字描边的宽度和颜色 */
+        color: transparent; /* 使文字颜色透明，只留下描边 */
+        font-size: 60px;
+        font-weight: bold;
+        text-align: center;
+      }
+      
     
     
     

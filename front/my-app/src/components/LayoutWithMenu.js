@@ -5,13 +5,17 @@ import MenuLeft from './Menu';
 
 const LayoutWithMenu = ({ children }) => {
     const location = useLocation();
-   // 显示 MenuLeft 除非是登录页或注册页
-   const showMenuLeft = location.pathname !== '/' && location.pathname !== '/register';
-
+    const showMenuLeft = location.pathname !== '/login' && location.pathname !== '/register'&&location.pathname!=='/';
 
     return (
-        <div style={{ paddingTop: '22px', display: 'flex', height: 'calc(100vh - 22px)' }}> {/* 为 Navbar 预留空间 */}
-        {showMenuLeft && <MenuLeft style={{ width: '256px', flexShrink: 0, marginTop: '20px' }} />}
+        <div style={{ paddingTop: '50px', display: 'flex', height: 'calc(100vh - 22px)' }}> {/* 为 Navbar 预留空间 */}
+        {showMenuLeft && (
+            <MenuLeft style={{ 
+                width: '256px', 
+                flexShrink: 0, 
+                marginTop: '20px'
+            }} />
+        )}
         <div style={{ flex: 1 }}>
             {children}
         </div>
@@ -20,3 +24,4 @@ const LayoutWithMenu = ({ children }) => {
 };
 
 export default LayoutWithMenu;
+

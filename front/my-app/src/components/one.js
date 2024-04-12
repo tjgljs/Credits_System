@@ -4,7 +4,7 @@ import { GithubOutlined, UsergroupAddOutlined, ArrowDownOutlined } from '@ant-de
 import qrcodeImage from './erweima.jpg';
 import '../RotatingCircle.css';
 
-const WelcomePage = () => {
+const One = () => {
     const [showQRCode, setShowQRCode] = useState(false);
     const [activeIndex, setActiveIndex] = useState(0);
     const [isPaused, setIsPaused] = useState(false);
@@ -108,4 +108,4 @@ const WelcomePage = () => {
     );
 };
 
-export default WelcomePage;
+export default One;

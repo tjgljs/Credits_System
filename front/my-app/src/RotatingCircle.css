@@ -1,0 +1,103 @@
+/* RotatingCircle.css */
+.circle-container {
+    position: relative;
+    width: 300px; /* 根据需要调整大小 */
+    height: 300px; /* 根据需要调整大小 */
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+
+.rotating-circle {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 300px; /* 保持和容器相同大小 */
+    height: 300px; /* 保持和容器相同大小 */
+    border-radius: 50%;
+    animation: spin 20s linear infinite;
+    position: absolute;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.rotating-circle li {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #285c6c;
+    border-radius: 50%;
+    cursor: pointer;
+    /* 将点位置到圆的边缘 */
+    transform: translateX(-150px); /* 调整到正确的半径距离 */
+    transform-origin: 150px 150px; /* 圆心移到父容器的中心 */
+}
+
+/* 每个点对应的角度 */
+.rotating-circle li:nth-child(1) { transform: translateX(-150px) rotate(0deg); }
+.rotating-circle li:nth-child(2) { transform: translateX(-150px) rotate(60deg); }
+.rotating-circle li:nth-child(3) { transform: translateX(-150px) rotate(120deg); }
+.rotating-circle li:nth-child(4) { transform: translateX(-150px) rotate(180deg); }
+.rotating-circle li:nth-child(5) { transform: translateX(-150px) rotate(240deg); }
+.rotating-circle li:nth-child(6) { transform: translateX(-150px) rotate(300deg); }
+
+.info-display {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 240px; /* 略小于圆的直径，保证文字不被遮挡 */
+    height: 240px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #285c6c;
+    border-radius: 50%;
+    background: white; /* 背景色 */
+}
+
+.rotating-circle li.active {
+    background: #7bdcb5; /* 高亮颜色 */
+}
+
+
+/* 图标高亮效果 */
+.icon-circle:hover {
+    fill: #7bdcb5; /* 高亮颜色 */
+    stroke: #ffffff; /* 边框颜色 */
+    stroke-width: 2; /* 边框宽度 */
+    transition: fill 0.3s ease-in-out, stroke 0.3s ease; /* 平滑过渡效果 */
+}
+
+.feature-container {
+    display: flex;
+    align-items: center; /* 垂直居中对齐子元素 */
+    justify-content: center; /* 水平居中对齐子元素 */
+    width: 100%; /* 占满整个父元素宽度 */
+    margin-top: 20px; /* 与页面其他内容保持一定距离 */
+}
+
+.circle-container {
+    flex-shrink: 0; /* 防止在flex布局中被压缩 */
+    margin-right: 20px; /* 与图片保持间距 */
+}
+
+.side-image {
+    height: auto; /* 保持原始宽高比 */
+    width: 300px; /* 控制图片宽度 */
+    margin: 20px; /* 在每张图片周围添加间隔 */
+}
+
+
+
+

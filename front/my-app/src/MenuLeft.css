@@ -3,5 +3,6 @@
     margin-top: 60px; /* 和 Navbar 的高度一样，保持一致 */
     width: 256px; /* 或者根据您的布局需求调整宽度 */
     flex-shrink: 0; /* 如果使用了 flex 布局，避免收缩 */
+    border: 1px solid #ddd; /* 在右侧添加一条边框，#ddd是一种浅灰色 */
     /* 其他可能需要的样式 */
 }
