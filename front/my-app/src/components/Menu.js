@@ -35,6 +35,7 @@ const items = [
         getItem('移除老师 ', '14'),
         getItem('撤销学分', '15'),
         getItem('学生转移学分请求', '16'),
+        getItem('添加课程信息','21'),
         
         getItem('顶级管理员', 'sub6', null, [getItem('添加管理员', '17'), getItem('移除管理员', '18')]),
       ]),
@@ -92,6 +93,9 @@ function MenuLeft() {
     }
     if(e.key==="20"){
       navigate('/one')
+    }
+    if(e.key==='21'){
+      navigate('add-course')
     }
     
   };

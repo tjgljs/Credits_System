@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.20+commit.a1b79de6"
+		"version": "0.8.25+commit.b61c2a91"
 	},
 	"language": "Solidity",
 	"output": {
@@ -142,9 +142,9 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"Credits_contract/credits.sol": "Ownable"
+			"credits.sol": "Ownable"
 		},
-		"evmVersion": "byzantium",
+		"evmVersion": "cancun",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -156,12 +156,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"Credits_contract/credits.sol": {
-			"keccak256": "0x53f6018c11c60c7b6986ae323d81c2772feb9818159cfa48fa5aead3f188fe44",
+		"credits.sol": {
+			"keccak256": "0x7f30a7f376f6783fcd6373f511a50fe5fc0a5b79c21b99cff1b09d45abbf59bc",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://7e93df7c93cea765d3e6ba69fe314540fac0a8881b6dcb26e0e27b2400a57278",
-				"dweb:/ipfs/QmZQcAZtYQuCbjCf7w31tfdm2ZnJjD9yUE7q9W9wysDT4R"
+				"bzz-raw://807c34e1a549f37ade6396e81e63abdc3c7a9445cb52662a47f50315822a9cf5",
+				"dweb:/ipfs/QmYDvrQcXBLkzr4Zh7ZpD5G9Sviugv3zrRJU3em3jncHVf"
 			]
 		}
 	},

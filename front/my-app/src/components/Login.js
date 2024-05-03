@@ -38,6 +38,7 @@ function Login() {
             localStorage.setItem('is_student',response.data.data.is_student)
 
             navigate('/one'); 
+            window.location.reload()
             
 
           } else {

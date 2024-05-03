@@ -52,15 +52,23 @@ function Navbar() {
         navigate('/register');
     };
 
+    const logOut=()=>{
+        localStorage.clear()
+        setToken(null)
+        navigate('/')
+    }
+
     return (
         <div className="navbar-container">
             <img src={logoImage} alt="Logo" className="navbar-logo" />
             <div className="button-group">
-                {!isLoggedIn() && (
+                {!isLoggedIn() ? (
                     <>
                         <Button className="pink-button" onClick={goToLoginPage}>Log in</Button>
                         <Button className="pink-button" onClick={goToSignUpPage}>Sign up</Button>
                     </>
+                ):(
+                    <Button className='pink-button' onClick={logOut}>Log out</Button>
                 )}
                 <Popover content={popoverContent()} title="Address">
                     <Button className="pink-button">Wallet Address</Button>

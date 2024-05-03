@@ -25,9 +25,12 @@ import RemoveAdmin from './components/RemoveAdmin';
 import RequsetStudent from './components/RequestStudent';
 import WelcomePage from './components/WelcomePage';
 import One from './components/one';
+import AddCourse from './components/AddCourse';
 
 
 function App() {
+
+    
     
     return (
         <Router>
@@ -48,85 +51,91 @@ function App() {
 
                 <Route path="/credits-detail" element={
                     // eslint-disable-next-line
-                    <ProtectedRoute component={StudentCredits} role="student" />
+                    <ProtectedRoute component={StudentCredits} roles={["student"]} />
                 } />
 
                 <Route path="/credits-transfer" element={
                     // eslint-disable-next-line
-                    <ProtectedRoute component={CreditTransfer} role="student" />
+                    <ProtectedRoute component={CreditTransfer} roles={["student"]} />
                 } />
                 <Route path="/credits-transferList" element={
                     // eslint-disable-next-line
-                    <ProtectedRoute component={CreditTransferList} role="student" />
+                    <ProtectedRoute component={CreditTransferList} roles={["student"]} />
                 } />
 
                 <Route path="/approve" element={
                     // eslint-disable-next-line
-                    <ProtectedRoute component={Approve} role="student" />
+                    <ProtectedRoute component={Approve} roles={["student"]} />
                 } />
 
                 <Route path="/admin" element={
                     // eslint-disable-next-line
-                    <ProtectedRoute component={Admin} role="admin" />
+                    <ProtectedRoute component={Admin} roles={["admin"]} />
                 } />
 
                 <Route path="/record-credit" element={
                     // eslint-disable-next-line
-                    <ProtectedRoute component={RecordCredit} role="teacher" />
+                    <ProtectedRoute component={RecordCredit} roles={["teacher","top","admin"]} />
                 } />
 
                 <Route path="/modify-credit" element={
                     // eslint-disable-next-line
-                    <ProtectedRoute component={ModifyCredit} role="teacher" />
+                    <ProtectedRoute component={ModifyCredit} roles={["teacher","top","admin"]} />
                 } />
 
                 <Route path="/get-student-credit-by-mechanism" element={
                     // eslint-disable-next-line
-                    <ProtectedRoute component={GetStudentCreditByMechanism} role="mechanism" />
+                    <ProtectedRoute component={GetStudentCreditByMechanism} roles={["mechanism"]} />
                 } />
 
                 <Route path="/request-student" element={
                     // eslint-disable-next-line
-                    <ProtectedRoute component={RequsetStudent} role="mechanism" />
+                    <ProtectedRoute component={RequsetStudent} roles={["mechanism"]} />
                 } />
 
                 <Route path="/add-teacher" element={
                     // eslint-disable-next-line
-                    <ProtectedRoute component={AddTeacher} role="admin" />
+                    <ProtectedRoute component={AddTeacher} roles={["admin","top"]} />
                 } />
 
                 <Route path="/remove-teacher" element={
                     // eslint-disable-next-line
-                    <ProtectedRoute component={RemoveTeacher} role="admin" />
+                    <ProtectedRoute component={RemoveTeacher} roles={["admin","top"]} />
                 } />
 
                 <Route path="/cancel-credit" element={
                     // eslint-disable-next-line
-                    <ProtectedRoute component={Cancel} role="admin" />
+                    <ProtectedRoute component={Cancel} roles={["admin","top"]} />
                 } />
 
                 <Route path="/all-request-credit-transfer" element={
                     // eslint-disable-next-line
-                    <ProtectedRoute component={AllrequestCreditTransfer} role="admin" />
+                    <ProtectedRoute component={AllrequestCreditTransfer} roles={["admin","top"]} />
                 } />
                 
 
                 <Route path="/add-admin" element={
                     // eslint-disable-next-line
-                    <ProtectedRoute component={AddAdmin} role="top" />
+                    <ProtectedRoute component={AddAdmin} roles={["top"]} />
                 } />
+
                 <Route path="/remove-admin" element={
                     // eslint-disable-next-line
-                    <ProtectedRoute component={RemoveAdmin} role="top" />
+                    <ProtectedRoute component={RemoveAdmin} roles={["top"]} />
                 } />
+
+                <Route path='/add-course' element={
+                    // eslint-disable-next-line
+                    <ProtectedRoute component={AddCourse} roles={['admin', 'top']} />
+                }/>
 
                 <Route path="/Top" element={
                     // eslint-disable-next-line
-                    <ProtectedRoute component={Top} role="top" />
+                    <ProtectedRoute component={Top} roles={["top"]} />
                 } />
                 <Route path="/mechanism" element={
                     // eslint-disable-next-line
-                    <ProtectedRoute component={Mechanism} role="mechanism" />
+                    <ProtectedRoute component={Mechanism} roles={["mechanism"]} />
                 } />
 
             </Routes>

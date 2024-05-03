@@ -140,8 +140,8 @@
         }
 
         //添加课程
-        function addCourse(uint256 courseId,uint256 credits,string memory courseName)external onlyAdmin{
-        
+        function addCourse(uint256 courseId,uint256 credits,string memory courseName)external {
+            require(msg.sender==_owner||isAdmin[msg.sender]==true,"only topadmin or admin can call addCourse");
             require(!courseExists[courseId],"Course already exists");
             courseExists[courseId]=true;
             courseLists.push(courseId);
@@ -161,24 +161,24 @@
         }
         
         //添加老师
-        function addTeacher(address teacher)external onlyAdmin{
-        
+        function addTeacher(address teacher)external {
+            require(msg.sender==_owner||isAdmin[msg.sender]==true,"only topadmin or admin can call addTeacher");
             require(teacher!=address(0),"Invalid address");
 
             teachers[teacher]=true;
         }
 
         //移除老师
-        function removeTeacher(address teacher)external onlyAdmin{
-        
+        function removeTeacher(address teacher)external {
+            require(msg.sender==_owner||isAdmin[msg.sender]==true,"only topadmin or admin can call removeTeacher");
             require(teacher!=address(0),"Invalid address");
             require(teachers[teacher]==true,"address are not a teacher");
             teachers[teacher]=false;
         }
 
         //老师上传学分认证信息
-        function recordCredit(address student,uint256 courserId,uint256 score,string memory issuingInstitution)public onlyTeacher{
-        
+        function recordCredit(address student,uint256 courserId,uint256 score,string memory issuingInstitution)external {
+            require(msg.sender==_owner||isAdmin[msg.sender]==true||teachers[msg.sender]==true,"only topadmin or admin teacher can call recordCredit");
 
             require(student!=address(0),"Invalid address");
 
@@ -211,7 +211,6 @@
         //获取所有课程id
         function getAllCourseID()external view returns(uint[] memory){
 
-        
 
             return courseLists;
         }
@@ -333,8 +332,8 @@
 
 
         //学分撤销 必须为管理员才能call
-        function Cancel(address student,uint256 courseId)external  onlyAdmin{
-            
+        function Cancel(address student,uint256 courseId)external  {
+            require(msg.sender==_owner||isAdmin[msg.sender]==true,"only topadmin or admin can call cancel");
             require(studentCredits[student][courseId].issueDate != 0, "Credit does not exist");
             require(courseId>=0,"Invalid course ID");
             require(!studentCredits[student][courseId].isRevoked, "Credit already revoked");
@@ -378,8 +377,9 @@
 
 
         //管理员或授权教育机构审批学分转移请求
-        function approveCreditTransfer(address student, uint index) external onlyAdmin {
-            
+        function approveCreditTransfer(address student, uint index) external  {
+            require(msg.sender==_owner||isAdmin[msg.sender]==true,"only topadmin or admin can call approveCreditTransfer");
+
             require(!creditTransferRequests[student][index].isApproved, "Transfer already approved");
 
             creditTransferRequests[student][index].isApproved = true;
@@ -387,8 +387,9 @@
 
 
         //执行已批准的学分转移
-        function executeCreditTransfer(address student, uint index) external onlyAdmin{
-        
+        function executeCreditTransfer(address student, uint index) external {
+            require(msg.sender==_owner||isAdmin[msg.sender]==true,"only topadmin or admin can call execute");
+            
             require(creditTransferRequests[student][index].isApproved, "Transfer not approved");
 
             require(!creditTransferRequests[student][index].isExecuted, "Transfer already executed");
